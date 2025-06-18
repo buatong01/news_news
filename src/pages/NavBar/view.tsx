@@ -7,7 +7,7 @@ function NavBarView() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="bg-white w-screen">
+    <div className="bg-white w-screen fixed top-0 left-0 z-50">
       <div className="border-b border-gray-200 relative md:h-[80px] lg:h-[80px] sm:h-[48px]">
         <div className="flex items-center justify-between px-4 py-3 h-full ">
           {/* search menu */}
