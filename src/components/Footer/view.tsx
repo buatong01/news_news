@@ -38,7 +38,7 @@ function FooterView() {
 
         <div className="border-y-[0.5px] border-gray-200 mb-4"></div>
 
-        <div className="flex flex-col sm:flex-row gap-14 items-start sm:items-center">
+        <div className="flex flex-col sm:flex-row sm:gap-14 gap-5 items-start sm:items-center">
           <div className="text-black font-semibold text-base">
             Follow BBC on:
           </div>
