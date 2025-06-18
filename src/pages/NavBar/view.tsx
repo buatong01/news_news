@@ -11,7 +11,7 @@ function NavBarView() {
       <div className="border-b border-gray-200 relative md:h-[80px] lg:h-[80px] sm:h-[48px]">
         <div className="flex items-center justify-between px-4 py-3 h-full ">
           {/* search menu */}
-          <div className="relative flex flex-row items-center">
+          <button className="relative flex flex-row items-cente">
             <img
               src={menu}
               alt="menu"
@@ -22,16 +22,16 @@ function NavBarView() {
               alt="search"
               className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 absolute left-[14px] sm:left-[16px] md:left-[18px] bg-white rounded-full z-20"
             />
-          </div>
+          </button>
 
           <div className="flex flex-row items-center gap-3">
             <div className="hidden sm:flex gap-3">
-              <div className="bg-black text-white font-bold px-4 py-2 ml-2">
+              <button className="bg-black text-white font-bold px-4 py-2 ml-2">
                 Register
-              </div>
-              <div className="bg-white text-black font-bold px-4 py-2">
+              </button>
+              <button className="bg-white text-black font-bold px-4 py-2">
                 Sign in
-              </div>
+              </button>
             </div>
 
             {isMenuOpen ? (
@@ -73,22 +73,30 @@ function NavBarView() {
         </div>
       </div>
 
-      <div className="border-b border-gray-200 h-[42px] items-center justify-center space-x-2 hidden lg:flex ">
-        <div className="text-black text-sm font-semibold">Home</div>
-        <div className="text-black text-sm font-semibold">Home</div>
-        <div className="text-black text-sm font-semibold">Home</div>
+      <div className="border-b border-gray-200 h-[42px] items-center justify-center hidden lg:flex ">
+        <button className="text-black text-sm font-semibold h-full px-2.5">
+          Home
+        </button>
+        <button className="text-black text-sm font-semibold h-full px-2.5">
+          Home
+        </button>
+        <button className="text-black text-sm font-semibold h-full px-2.5">
+          Home
+        </button>
       </div>
 
       {isMenuOpen && (
         <div className="z-50 bg-black sm:hidden pb-2">
-          <div className="h-[42px] border-b border-white mx-4">
-            <div className="flex justify-start items-center px-4 h-full">
-              <div className="text-white text-base font-bold">Sign in</div>
+          <div className="h-[42px] border-b  border-white mx-4">
+            <div className="flex justify-start items-center h-full">
+              <button className="text-white h-full px-2 text-base font-bold">
+                Sign in
+              </button>
             </div>
           </div>
-          <div className="h-[40px] w-[90px] flex items-center justify-center text-sm font-bold text-black bg-white rounded-[1px] mx-auto mt-2 mb-0">
+          <button className="h-[40px] w-[90px] flex items-center justify-center text-sm font-bold text-black bg-white rounded-[1px] mx-auto mt-2 mb-0">
             Register
-          </div>
+          </button>
         </div>
       )}
     </div>
