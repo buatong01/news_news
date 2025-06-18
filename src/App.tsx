@@ -1,6 +1,6 @@
 import HomeView from "./pages/HomePage/view";
-import NavBarView from "./pages/NavBar/view";
-import FooterView from "./pages/Footer/view";
+import NavBarView from "./components/NavBar/view";
+import FooterView from "./components/Footer/view";
 import "./App.css";
 
 function App() {
