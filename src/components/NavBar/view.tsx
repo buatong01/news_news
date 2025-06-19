@@ -96,7 +96,7 @@ function NavBarView() {
           onClick={() => {
             setIsMenuOpen(false);
           }}
-          className="sm:hidden cursor-pointer absolute right-0 top-0 bg-black  py-4ๆ px-4 z-50"
+          className="sm:hidden cursor-pointer absolute right-0 top-0 bg-black  py-4 px-4 z-50"
         >
           <img src={x} alt="x-cross" className="h-5 w-5 filter invert" />
         </div>
