@@ -5,7 +5,7 @@ import instragram from "../../assets/instagram.png";
 function FooterView() {
   return (
     <div className="bg-white w-screen">
-      <div className="border-y border-gray-900 h-auto px-4 py-4 pt-4 pb-12 ">
+      <div className="border-t border-gray-900 h-auto px-4 py-4 pt-4 pb-12 ">
         <div className="flex gap-2.5">
           <div className="text-white font-bold bg-black px-2 lg:text-2xl md:text-xl ">
             B

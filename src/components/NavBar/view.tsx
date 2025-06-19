@@ -35,18 +35,9 @@ function NavBarView() {
             </div>
 
             {isMenuOpen ? (
-              <div className="sm:hidden">
-                <img
-                  src={x}
-                  alt="x-cross"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                  }}
-                  className="h-5 w-5  "
-                />
-              </div>
+              <div></div>
             ) : (
-              <div className="sm:hidden">
+              <div className="sm:hidden cursor-pointer">
                 <img
                   src={avatar}
                   alt="avatar"
@@ -97,6 +88,17 @@ function NavBarView() {
           <button className="h-[40px] w-[90px] flex items-center justify-center text-sm font-bold text-black bg-white rounded-[1px] mx-auto mt-2 mb-0">
             Register
           </button>
+        </div>
+      )}
+
+      {isMenuOpen && (
+        <div
+          onClick={() => {
+            setIsMenuOpen(false);
+          }}
+          className="sm:hidden cursor-pointer absolute right-0 top-0 bg-black  py-4ๆ px-4 z-50"
+        >
+          <img src={x} alt="x-cross" className="h-5 w-5 filter invert" />
         </div>
       )}
     </div>
