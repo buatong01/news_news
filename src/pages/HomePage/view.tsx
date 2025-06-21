@@ -3,7 +3,7 @@ function HomeView() {
   return (
     <div className="w-full min-h-screen bg-white pt-[45px] sm:pt-[48px] md:pt-[80px] lg:pt-[122px] px-4  xl:px-25 ">
       {/* box 1 */}
-      <div className="grid grid-cols-1 sm:grid-cols-12 lg:grid-cols-16 gap-5">
+      <div className="grid grid-cols-8 sm:grid-cols-12 lg:grid-cols-16 gap-5">
         <div className="hidden sm:block sm:col-span-4 py-5">
           <NewsBox isShowImg={true} isBigText={false} isShowUnderLine={true} />
           <NewsBox isShowImg={true} isBigText={false} isShowUnderLine={false} />
@@ -25,7 +25,37 @@ function HomeView() {
         </div>
       </div>
 
-      <div className="lg:hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-5 py-5">
+      <div className="sm:hidden flex flex-row group cursor-pointer justify-center items-start pb-5">
+        <img
+          className="object-cover h-[80px] pr-3"
+          src="https://ichef.bbci.co.uk/news/800/cpsprodpb/ce8d/live/59e737a0-4e79-11f0-b0f7-e3a4fb1ebd88.jpg.webp"
+          alt="news"
+        />
+        <div className="flex flex-col justify-start">
+          <h2 className="text-black group-hover:underline text-base font-bold">
+            Tulsi Gabbard now says Iran could produce nuclear weapon 'within
+            weeks'
+          </h2>
+          <p className="text-[12px] pt-3.5 text-black">10 hrs ago | World</p>
+        </div>
+      </div>
+
+      <div className="sm:hidden flex flex-row group cursor-pointer justify-center items-start pb-5">
+        <img
+          className="object-cover h-[80px] pr-3"
+          src="https://ichef.bbci.co.uk/news/800/cpsprodpb/ce8d/live/59e737a0-4e79-11f0-b0f7-e3a4fb1ebd88.jpg.webp"
+          alt="news"
+        />
+        <div className="flex flex-col justify-start">
+          <h2 className="text-black group-hover:underline text-base font-bold">
+            Tulsi Gabbard now says Iran could produce nuclear weapon 'within
+            weeks'
+          </h2>
+          <p className="text-[12px] pt-3.5 text-black">10 hrs ago | World</p>
+        </div>
+      </div>
+
+      <div className="lg:hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-5 pb-5 sm:py-5">
         <NewsBox isShowImg={false} isBigText={false} isShowUnderLine={true} />
         <NewsBox isShowImg={false} isBigText={false} isShowUnderLine={true} />
         <NewsBox isShowImg={false} isBigText={false} isShowUnderLine={true} />
