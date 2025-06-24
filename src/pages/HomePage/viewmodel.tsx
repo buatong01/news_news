@@ -2,28 +2,41 @@ import { useQuery } from "@tanstack/react-query";
 import type { Article } from "../../services/HomeService/types/news";
 import useHomeService from "../../services/HomeService/service/service";
 import { useNewsContext } from "../../context/newcontext";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 function useHomeViewModel(category: string) {
-  const { fetchNews } = useHomeService();
-  const { setArticles } = useNewsContext();
-  const [currentPage, setCurrentPage] = useState(1);
+  const { fetchNews, fetchEverythingNews } = useHomeService();
+  const { setArticles, setEverythingArticles } = useNewsContext();
 
   const [moreInPage, setMoreInPage] = useState(1);
   const itemsPerPage = 4;
 
+  const categories = ["business", "technology", "science", "trump"];
+
   const { data: allData = [], isLoading: isAllLoading } = useQuery<Article[]>({
     queryKey: ["top-headlines", category],
-    queryFn: () => fetchNews("top-headlines", category),
+    queryFn: () => fetchNews(category),
     refetchOnWindowFocus: false,
   });
+
+  const { data: everythingData = [], isLoading: isEverythingLoading } =
+    useQuery<Article[]>({
+      queryKey: ["everything-news"],
+      queryFn: () => fetchEverythingNews(),
+      refetchOnWindowFocus: false,
+    });
 
   useEffect(() => {
     if (allData.length > 0) {
       setArticles(allData);
     }
-    console.log(allData.length);
   }, [allData, setArticles]);
+
+  useEffect(() => {
+    if (everythingData.length > 0) {
+      setEverythingArticles(everythingData);
+    }
+  }, [everythingData, setEverythingArticles]);
 
   const startIndex = 10 + (moreInPage - 1) * itemsPerPage;
   const currentMoreInArticles = allData.slice(
@@ -33,17 +46,16 @@ function useHomeViewModel(category: string) {
   const totalMoreInPages =
     allData.length > 10 ? Math.ceil((allData.length - 10) / itemsPerPage) : 0;
 
-  //abc
-
   return {
     all_articles: allData,
     isAllLoading,
-    currentPage,
     setMoreInPage,
     currentMoreInArticles,
     totalMoreInPages,
     moreInPage,
     startIndex,
+    everything_articles: everythingData,
+    isEverythingLoading,
   };
 }
 

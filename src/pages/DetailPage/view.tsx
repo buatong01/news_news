@@ -11,13 +11,27 @@ import NewsBox from "../../components/NewsBox";
 // import Skeleton from "react-loading-skeleton";
 
 function DetailView() {
-  const { index } = useParams();
-  const { articles } = useNewsContext();
+  const { index, category } = useParams();
+  const { articles, everythingArticles } = useNewsContext();
 
   const article = useMemo(() => {
     if (!articles || !index) return undefined;
-    return articles[Number(index)];
-  }, [articles, index]);
+
+    if (category === "head") {
+      return articles[Number(index)];
+    } else {
+      const result = everythingArticles
+        .filter(
+          (article: Article) => article.category?.toLowerCase() === category
+        )
+        .sort(
+          (a: Article, b: Article) =>
+            new Date(b.publishedAt).getTime() -
+            new Date(a.publishedAt).getTime()
+        );
+      return result[Number(index)];
+    }
+  }, [articles, everythingArticles, category, index]);
 
   //abc
 
@@ -105,16 +119,39 @@ function DetailView() {
         </h3>
 
         <div className="pt-5 pb-12 gap-6 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {articles.slice(7, 10).map((articles: Article, index: number) => (
-            <NewsBox
-              data={articles}
-              index={7 + index}
-              isShowImg={false}
-              isCenter={false}
-              isShowDescription={false}
-              isLast={false}
-            />
-          ))}
+          {category === "head"
+            ? articles
+                .slice(7, 10)
+                .map((articles: Article, index: number) => (
+                  <NewsBox
+                    data={articles}
+                    index={7 + index}
+                    category="head"
+                    isShowImg={false}
+                    isCenter={false}
+                    isShowDescription={false}
+                    isLast={false}
+                  />
+                ))
+            : everythingArticles
+                .filter((article: Article) => article.category === category)
+                .sort(
+                  (a: Article, b: Article) =>
+                    new Date(b.publishedAt).getTime() -
+                    new Date(a.publishedAt).getTime()
+                )
+                .slice(7, 10)
+                .map((articles: Article, index: number) => (
+                  <NewsBox
+                    data={articles}
+                    index={7 + index}
+                    category={category ?? "head"}
+                    isShowImg={false}
+                    isCenter={false}
+                    isShowDescription={false}
+                    isLast={false}
+                  />
+                ))}
         </div>
       </div>
 
@@ -124,9 +161,31 @@ function DetailView() {
           MORE FROM THE BBC
         </h3>
         <div>
-          {articles.slice(10, 14).map((articles: Article, index: number) => (
-            <NewsBoxRow data={articles} index={10 + index} />
-          ))}
+          {category === "head"
+            ? articles
+                .slice(10, 14)
+                .map((articles: Article, index: number) => (
+                  <NewsBoxRow
+                    data={articles}
+                    index={10 + index}
+                    category="head"
+                  />
+                ))
+            : everythingArticles
+                .filter((article: Article) => article.category === category)
+                .sort(
+                  (a: Article, b: Article) =>
+                    new Date(b.publishedAt).getTime() -
+                    new Date(a.publishedAt).getTime()
+                )
+                .slice(10, 14)
+                .map((articles: Article, index: number) => (
+                  <NewsBoxRow
+                    data={articles}
+                    index={10 + index}
+                    category={category ?? "head"}
+                  />
+                ))}
         </div>
       </div>
     </div>

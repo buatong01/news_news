@@ -21,12 +21,9 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<HomeView category={category} />} />
-          <Route path="/detail/:index" element={<DetailView />} />
+          <Route path="/detail/:index/:category" element={<DetailView />} />
         </Routes>
-        <FooterView
-          categorySelected={category}
-          onCategoryChange={setCategory}
-        />
+        <FooterView onCategoryChange={setCategory} />
       </NewsProvider>
     </>
   );

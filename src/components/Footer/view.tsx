@@ -7,10 +7,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function FooterView({
-  categorySelected,
   onCategoryChange,
 }: {
-  categorySelected: string;
   onCategoryChange: (category: string) => void;
 }) {
   const [isLanguagesOpen, setIsLanguagesOpen] = useState(false);

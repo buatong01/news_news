@@ -13,7 +13,7 @@ function NewsBoxRowTwo({ data, index }: ImgNewsProps) {
 
   return (
     <div
-      onClick={() => nevigate(`/detail/${index}`)}
+      onClick={() => nevigate(`/detail/${index}/head`)}
       className="sm:hidden flex flex-col group cursor-pointer pb-5"
     >
       <div className="flex justify-center items-start ">

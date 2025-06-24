@@ -24,6 +24,8 @@ function HomeView({ category }: { category: string }) {
     totalMoreInPages,
     moreInPage,
     startIndex,
+    isEverythingLoading,
+    everything_articles,
   } = useHomeViewModel(category);
 
   //abc
@@ -42,6 +44,7 @@ function HomeView({ category }: { category: string }) {
                     key={articles.title}
                     data={articles}
                     index={0 + index}
+                    category="head"
                     isShowImg={true}
                     isCenter={false}
                     isShowDescription={true}
@@ -57,6 +60,7 @@ function HomeView({ category }: { category: string }) {
             <NewsBox
               data={all_articles[2]}
               index={2}
+              category="head"
               isShowImg={true}
               isCenter={true}
               isShowDescription={true}
@@ -75,6 +79,7 @@ function HomeView({ category }: { category: string }) {
                     key={articles.title}
                     data={articles}
                     index={3 + index}
+                    category="head"
                     isShowImg={false}
                     isCenter={false}
                     isShowDescription={true}
@@ -106,6 +111,7 @@ function HomeView({ category }: { category: string }) {
                   key={articles.title}
                   data={articles}
                   index={3 + index}
+                  category="head"
                   isShowImg={false}
                   isCenter={false}
                   isShowDescription={true}
@@ -128,6 +134,7 @@ function HomeView({ category }: { category: string }) {
                   key={articles.title}
                   data={articles}
                   index={7 + index}
+                  category="head"
                   isShowImg={true}
                   isCenter={false}
                   isShowDescription={true}
@@ -182,6 +189,7 @@ function HomeView({ category }: { category: string }) {
                         key={articles.title}
                         data={articles}
                         index={11 + index}
+                        category="head"
                         isShowImg={true}
                         isCenter={false}
                         isShowDescription={true}
@@ -199,6 +207,7 @@ function HomeView({ category }: { category: string }) {
                     key={articles.title}
                     data={articles}
                     index={9 + index}
+                    category="head"
                     isShowImg={index === 0}
                     isCenter={true}
                     isShowDescription={true}
@@ -214,6 +223,7 @@ function HomeView({ category }: { category: string }) {
                     key={articles.title}
                     data={articles}
                     index={10 + index}
+                    category="head"
                     isShowImg={true}
                     isCenter={false}
                     isShowDescription={true}
@@ -227,6 +237,7 @@ function HomeView({ category }: { category: string }) {
                     key={articles.title}
                     data={articles}
                     index={14 + index}
+                    category="head"
                     isShowImg={false}
                     isCenter={false}
                     isShowDescription={true}
@@ -242,6 +253,7 @@ function HomeView({ category }: { category: string }) {
                     key={articles.title}
                     data={articles}
                     index={10 + index}
+                    category="head"
                     isShowImg={true}
                     isCenter={index === 3}
                     isShowDescription={true}
@@ -249,7 +261,7 @@ function HomeView({ category }: { category: string }) {
                   />
                 ))}
             </div>
-            //////
+
             <div className=" sm:hidden grid grid-cols-1 ">
               {all_articles
                 .slice(10, 13)
@@ -270,6 +282,7 @@ function HomeView({ category }: { category: string }) {
                       key={articles.title}
                       data={articles}
                       index={13 + index}
+                      category="head"
                       isShowImg={true}
                       isCenter={true}
                       isShowDescription={true}
@@ -285,6 +298,7 @@ function HomeView({ category }: { category: string }) {
                     key={articles.title}
                     data={articles}
                     index={14 + index}
+                    category="head"
                     isShowImg={false}
                     isCenter={false}
                     isShowDescription={true}
@@ -295,11 +309,119 @@ function HomeView({ category }: { category: string }) {
           </div>
         </div>
       )}
-
       {/* อันที่งง ฟ้ามแตะ */}
 
-      {/* ปุ่มเลื่อน */}
+      {/* แยก category ไรนักหนาวะ */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="border-t-2 border-black">
+          <h3 className="text-black font-extrabold pt-1 pb-4">TRUMP &gt;</h3>
+          {everything_articles
+            .filter(
+              (article: Article) => article.category?.toLowerCase() === "trump"
+            )
+            .sort(
+              (a: Article, b: Article) =>
+                new Date(b.publishedAt).getTime() -
+                new Date(a.publishedAt).getTime()
+            )
+            .slice(0, 4)
+            .map((articles: Article, index: number) => (
+              <NewsBox
+                key={articles.title}
+                data={articles}
+                index={0 + index}
+                category={articles.category ?? "head"}
+                isShowImg={index === 0}
+                isCenter={false}
+                isShowDescription={index === 0}
+                isLast={index !== 3}
+              />
+            ))}
+        </div>
 
+        <div className="border-t-2 border-black">
+          <h3 className="text-black font-extrabold pt-1 pb-4">BUSINESS &gt;</h3>
+          {everything_articles
+            .filter(
+              (article: Article) =>
+                article.category?.toLowerCase() === "business"
+            )
+            .sort(
+              (a: Article, b: Article) =>
+                new Date(b.publishedAt).getTime() -
+                new Date(a.publishedAt).getTime()
+            )
+            .slice(0, 4)
+            .map((articles: Article, index: number) => (
+              <NewsBox
+                key={articles.title}
+                data={articles}
+                index={0 + index}
+                category={articles.category ?? "head"}
+                isShowImg={index === 0}
+                isCenter={false}
+                isShowDescription={index === 0}
+                isLast={index !== 3}
+              />
+            ))}
+        </div>
+
+        <div className="border-t-2 border-black">
+          <h3 className="text-black font-extrabold pt-1 pb-4">ANIMAL &gt;</h3>
+          {everything_articles
+            .filter(
+              (article: Article) => article.category?.toLowerCase() === "animal"
+            )
+            .sort(
+              (a: Article, b: Article) =>
+                new Date(b.publishedAt).getTime() -
+                new Date(a.publishedAt).getTime()
+            )
+            .slice(0, 4)
+            .map((articles: Article, index: number) => (
+              <NewsBox
+                key={articles.title}
+                data={articles}
+                index={0 + index}
+                category={articles.category ?? "head"}
+                isShowImg={index === 0}
+                isCenter={false}
+                isShowDescription={index === 0}
+                isLast={index !== 3}
+              />
+            ))}
+        </div>
+
+        <div className="border-t-2 border-black">
+          <h3 className="text-black font-extrabold pt-1 pb-4">SCIENCE &gt;</h3>
+          {everything_articles
+            .filter(
+              (article: Article) =>
+                article.category?.toLowerCase() === "science"
+            )
+            .sort(
+              (a: Article, b: Article) =>
+                new Date(b.publishedAt).getTime() -
+                new Date(a.publishedAt).getTime()
+            )
+            .slice(0, 4)
+            .map((articles: Article, index: number) => (
+              <NewsBox
+                key={articles.title}
+                data={articles}
+                index={0 + index}
+                category={articles.category ?? "head"}
+                isShowImg={index === 0}
+                isCenter={false}
+                isShowDescription={index === 0}
+                isLast={index !== 3}
+              />
+            ))}
+        </div>
+      </div>
+      {/* แยก category ไรนักหนาวะ */}
+
+      {/* ปุ่มเลื่อน */}
       {isAllLoading ? (
         <div></div>
       ) : (
@@ -316,6 +438,7 @@ function HomeView({ category }: { category: string }) {
                   key={article.title}
                   data={article}
                   index={startIndex + index}
+                  category="head"
                 />
               ))}
             </div>

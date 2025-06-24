@@ -5,15 +5,16 @@ import { useNavigate } from "react-router-dom";
 type ImgNewsProps = {
   data: Article;
   index: number;
+  category: string;
 };
 
-function NewsBoxRow({ data, index }: ImgNewsProps) {
+function NewsBoxRow({ data, index, category }: ImgNewsProps) {
   if (!data) return null;
 
   const nevigate = useNavigate();
   return (
     <div
-      onClick={() => nevigate(`/detail/${index}`)}
+      onClick={() => nevigate(`/detail/${index}/${category}`)}
       className="grid grid-cols-12 gap-6 pt-5 cursor-pointer group"
     >
       <p className="text-[12px] text-black col-span-2 hidden sm:flex  justify-end items-start ">
@@ -34,9 +35,12 @@ function NewsBoxRow({ data, index }: ImgNewsProps) {
         alt="news"
       />
       <div className="col-span-12 sm:col-start-3 sm:col-span-10 pb-9">
-        <p className="text-[12px] sm:flex hidden text-black">World</p>
+        <p className="text-[12px] sm:flex hidden text-black">
+          {category === "head" ? "" : category}
+        </p>
         <p className="text-[12px] sm:hidden flex text-black">
-          {formatPublishedDate(data.publishedAt)}| World
+          {formatPublishedDate(data.publishedAt)}
+          {category === "head" ? "" : "|" + category}
         </p>
         <div className="border-b border-gray-200 w-full mt-2"></div>
       </div>

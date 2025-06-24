@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 type ImgNewsProps = {
   data: Article;
   index: number;
+  category: string;
   isShowImg: boolean;
   isCenter: boolean;
   isLast?: boolean;
@@ -14,6 +15,7 @@ type ImgNewsProps = {
 function NewsBox({
   data,
   index,
+  category,
   isShowImg,
   isCenter,
   isLast,
@@ -24,7 +26,7 @@ function NewsBox({
   const formatDate = formatPublishedDate(data.publishedAt);
   return (
     <div
-      onClick={() => nevigate(`/detail/${index}`)}
+      onClick={() => nevigate(`/detail/${index}/${category}`)}
       className="group cursor-pointer"
     >
       {isShowImg && (
@@ -49,7 +51,9 @@ function NewsBox({
       {isShowDescription && (
         <p className="text-black text-sm pt-3">{data.description}</p>
       )}
-      <p className="text-[12px] pt-3.5 text-black">{formatDate}</p>
+      <p className="text-[12px] pt-3.5 text-black">
+        {formatDate} {category === "head" ? "" : "| " + category}
+      </p>
 
       {isLast && (
         <div className="border-b border-gray-200 w-full pt-2 mb-4"></div>
