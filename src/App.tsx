@@ -15,12 +15,18 @@ function App() {
     <>
       <ScrollToTop />
       <NewsProvider>
-        <NavBarView onCategoryChange={setCategory} />
+        <NavBarView
+          categorySelected={category}
+          onCategoryChange={setCategory}
+        />
         <Routes>
           <Route path="/" element={<HomeView category={category} />} />
           <Route path="/detail/:index" element={<DetailView />} />
         </Routes>
-        <FooterView />
+        <FooterView
+          categorySelected={category}
+          onCategoryChange={setCategory}
+        />
       </NewsProvider>
     </>
   );

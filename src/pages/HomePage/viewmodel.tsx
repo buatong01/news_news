@@ -15,6 +15,7 @@ function useHomeViewModel(category: string) {
   const { data: allData = [], isLoading: isAllLoading } = useQuery<Article[]>({
     queryKey: ["top-headlines", category],
     queryFn: () => fetchNews("top-headlines", category),
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

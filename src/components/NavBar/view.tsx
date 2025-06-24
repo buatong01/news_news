@@ -5,8 +5,10 @@ import x from "../../assets/x.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 function NavBarView({
+  categorySelected,
   onCategoryChange,
 }: {
+  categorySelected: string;
   onCategoryChange: (category: string) => void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -82,7 +84,9 @@ function NavBarView({
         ].map(({ label, value }) => (
           <button
             key={value}
-            className="text-black text-sm font-semibold h-full px-2.5 capitalize"
+            className={`text-black text-sm font-semibold h-full px-2.5 capitalize ${
+              categorySelected === value ? "border-b-3 pt-0.5" : ""
+            }`}
             onClick={() => {
               nevigate("/");
               onCategoryChange(value);

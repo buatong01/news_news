@@ -1,5 +1,6 @@
 import NewsBox from "../../components/NewsBox";
 import NewsBoxRow from "../../components/NewsBoxRow";
+import NewsBoxRowTwo from "../../components/NewsBoxRowTwo";
 import type { Article } from "../../services/HomeService/types/news";
 import useHomeViewModel from "./viewmodel";
 import { formatPublishedDate } from "../../utils/formatedate";
@@ -83,29 +84,15 @@ function HomeView({ category }: { category: string }) {
 
       {isAllLoading
         ? [1, 2].map((i) => <SkeletonBox key={i} height={80} />)
-        : all_articles.slice(0, 2).map((articles: Article) => (
-            <div
-              key={articles.title}
-              className="sm:hidden flex flex-col group cursor-pointer pb-5"
-            >
-              <div className="flex justify-center items-start ">
-                <img
-                  className="object-cover h-[80px] pr-3"
-                  src={articles.urlToImage ?? undefined}
-                  alt="news"
-                />
-                <div className="flex flex-col justify-start">
-                  <h2 className="text-black group-hover:underline text-base font-bold">
-                    {articles.title}
-                  </h2>
-                  <p className="text-[12px] pt-3.5 text-black">
-                    {formatPublishedDate(articles.publishedAt)}
-                  </p>
-                </div>
-              </div>
-              <div className="border-b border-gray-200 w-full pt-2 mb-4"></div>
-            </div>
-          ))}
+        : all_articles
+            .slice(0, 2)
+            .map((articles: Article, index: number) => (
+              <NewsBoxRowTwo
+                key={articles.title}
+                data={articles}
+                index={0 + index}
+              />
+            ))}
 
       <div className="lg:hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-5 pb-5 sm:py-5">
         {isAllLoading
@@ -147,6 +134,173 @@ function HomeView({ category }: { category: string }) {
               ))}
       </div>
       {/* box 2 */}
+
+      {/* อันที่งง ห้ามแตะ  */}
+      {category === "" && (
+        <div>
+          <div className="border-b-2 border-black w-full pt-8"></div>
+          <h2 className="text-black font-extrabold pt-1 ">ALSO IN NEWS &gt;</h2>
+          <div className="grid md:grid-cols-10 lg:grid-cols-15 gap-0 sm:gap-5 pt-5">
+            <div className=" md:col-span-7 lg:col-span-11 ">
+              <div className="hidden md:flex flex-col">
+                {all_articles
+                  .slice(9, 10)
+                  .map((articles: Article, index: number) => (
+                    <div className="grid grid-cols-5 gap-3.5 mb-3.5">
+                      <div className="col-span-2 ">
+                        <div className="group cursor-pointer ">
+                          <h2
+                            className="text-black group-hover:underline text-xl md:text-2xl xl:text-3xl
+                         font-bold pt-2"
+                          >
+                            {articles.title}
+                          </h2>
+
+                          <p className="text-black text-sm pt-3">
+                            {articles.description}
+                          </p>
+                          <p className="text-[12px] pt-3.5 text-black">
+                            {formatPublishedDate(articles.publishedAt)}
+                          </p>
+
+                          {/* <div className="border-b border-gray-200 w-full pt-2 mb-4"></div> */}
+                        </div>
+                      </div>
+                      <div className="col-span-3">
+                        <img
+                          className="object-cover  "
+                          src={
+                            articles.urlToImage ??
+                            "https://i.pinimg.com/736x/94/2d/7b/942d7b770176b84541f4356ec87a0e09.jpg"
+                          }
+                          alt="news"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                  {all_articles
+                    .slice(11, 14)
+                    .map((articles: Article, index: number) => (
+                      <NewsBox
+                        key={articles.title}
+                        data={articles}
+                        index={11 + index}
+                        isShowImg={true}
+                        isCenter={false}
+                        isShowDescription={true}
+                        isLast={false}
+                      />
+                    ))}
+                </div>
+              </div>
+            </div>
+            <div className="md:hidden flex">
+              {all_articles
+                .slice(9, 10)
+                .map((articles: Article, index: number) => (
+                  <NewsBox
+                    key={articles.title}
+                    data={articles}
+                    index={9 + index}
+                    isShowImg={index === 0}
+                    isCenter={true}
+                    isShowDescription={true}
+                    isLast={true}
+                  />
+                ))}
+            </div>
+            <div className="hidden md:block md:col-span-3 lg:col-span-4 ">
+              {all_articles
+                .slice(10, 11)
+                .map((articles: Article, index: number) => (
+                  <NewsBox
+                    key={articles.title}
+                    data={articles}
+                    index={10 + index}
+                    isShowImg={true}
+                    isCenter={false}
+                    isShowDescription={true}
+                    isLast={true}
+                  />
+                ))}
+              {all_articles
+                .slice(14, 16)
+                .map((articles: Article, index: number) => (
+                  <NewsBox
+                    key={articles.title}
+                    data={articles}
+                    index={14 + index}
+                    isShowImg={false}
+                    isCenter={false}
+                    isShowDescription={true}
+                    isLast={true}
+                  />
+                ))}
+            </div>
+            <div className=" md:hidden sm:grid hidden grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {all_articles
+                .slice(10, 13)
+                .map((articles: Article, index: number) => (
+                  <NewsBox
+                    key={articles.title}
+                    data={articles}
+                    index={10 + index}
+                    isShowImg={true}
+                    isCenter={index === 3}
+                    isShowDescription={true}
+                    isLast={false}
+                  />
+                ))}
+            </div>
+            //////
+            <div className=" sm:hidden grid grid-cols-1 ">
+              {all_articles
+                .slice(10, 13)
+                .map((articles: Article, index: number) => (
+                  <NewsBoxRowTwo
+                    key={articles.title}
+                    data={articles}
+                    index={0 + index}
+                  />
+                ))}
+            </div>
+            <div className="md:hidden grid grid-cols-1  gap-3.5">
+              <div className="sm:flex hidden">
+                {all_articles
+                  .slice(13, 14)
+                  .map((articles: Article, index: number) => (
+                    <NewsBox
+                      key={articles.title}
+                      data={articles}
+                      index={13 + index}
+                      isShowImg={true}
+                      isCenter={true}
+                      isShowDescription={true}
+                      isLast={false}
+                    />
+                  ))}
+              </div>
+
+              {all_articles
+                .slice(14, 16)
+                .map((articles: Article, index: number) => (
+                  <NewsBox
+                    key={articles.title}
+                    data={articles}
+                    index={14 + index}
+                    isShowImg={false}
+                    isCenter={false}
+                    isShowDescription={true}
+                    isLast={false}
+                  />
+                ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* อันที่งง ฟ้ามแตะ */}
 
       {/* ปุ่มเลื่อน */}
 

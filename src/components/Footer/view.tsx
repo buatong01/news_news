@@ -4,9 +4,17 @@ import instragram from "../../assets/instagram.png";
 import down from "../../assets/down.png";
 import up from "../../assets/up.png";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function FooterView() {
+function FooterView({
+  categorySelected,
+  onCategoryChange,
+}: {
+  categorySelected: string;
+  onCategoryChange: (category: string) => void;
+}) {
   const [isLanguagesOpen, setIsLanguagesOpen] = useState(false);
+  const nevigate = useNavigate();
 
   return (
     <div className="bg-white w-screen">
@@ -24,15 +32,26 @@ function FooterView() {
         </div>
 
         <div className="flex flex-col sm:flex-row flex-wrap space-x-5 ">
-          <div className="text-black text-sm font-semibold pt-5 cursor-pointer hover:underline">
-            Home
-          </div>
-          <div className="text-black text-sm font-semibold pt-5 cursor-pointer hover:underline">
-            Home
-          </div>
-          <div className="text-black text-sm font-semibold pt-5 cursor-pointer hover:underline">
-            Home
-          </div>
+          {[
+            { label: "Home", value: "" }, // general
+            { label: "Business", value: "business" },
+            { label: "Entertainment", value: "entertainment" },
+            { label: "Health", value: "health" },
+            { label: "Science", value: "science" },
+            { label: "Sports", value: "sports" },
+            { label: "Technology", value: "technology" },
+          ].map(({ label, value }) => (
+            <div
+              key={value}
+              className="text-black text-sm font-semibold pt-5 cursor-pointer hover:underline"
+              onClick={() => {
+                nevigate("/");
+                onCategoryChange(value);
+              }}
+            >
+              {label}
+            </div>
+          ))}
         </div>
 
         <button

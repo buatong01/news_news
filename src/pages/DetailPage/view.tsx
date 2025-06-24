@@ -60,7 +60,9 @@ function DetailView() {
         </div>
 
         <div className="w-full px-4 sm:px-0 xl:px-20 pt-3  text-left flex flex-col">
-          <p className="text-black font-sm font-bold">{article.author}</p>
+          <p className="text-black font-sm font-bold">
+            {article.author ?? "No Author"}
+          </p>
           <p className="text-black text-[12px]">{article.source.name}</p>
         </div>
 
