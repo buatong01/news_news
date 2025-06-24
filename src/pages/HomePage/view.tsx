@@ -160,9 +160,9 @@ function HomeView({ category }: { category: string }) {
                         </p>
                       </div>
 
-                      <div className="col-span-3">
+                      <div className="col-span-3 flex items-center justify-center">
                         <img
-                          className="object-cover  "
+                          className="object-cover"
                           src={
                             articles.urlToImage ??
                             "https://i.pinimg.com/736x/94/2d/7b/942d7b770176b84541f4356ec87a0e09.jpg"

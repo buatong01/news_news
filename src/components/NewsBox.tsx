@@ -25,17 +25,19 @@ function NewsBox({
   return (
     <div
       onClick={() => nevigate(`/detail/${index}`)}
-      className="group cursor-pointer "
+      className="group cursor-pointer"
     >
       {isShowImg && (
-        <img
-          className=" object-cover"
-          src={
-            data.urlToImage ??
-            "https://i.pinimg.com/736x/94/2d/7b/942d7b770176b84541f4356ec87a0e09.jpg"
-          }
-          alt="news"
-        />
+        <div className="flex justify-center">
+          <img
+            className="object-cover"
+            src={
+              data.urlToImage ??
+              "https://i.pinimg.com/736x/94/2d/7b/942d7b770176b84541f4356ec87a0e09.jpg"
+            }
+            alt="news"
+          />
+        </div>
       )}
       <h2
         className={`text-black group-hover:underline  ${
