@@ -146,26 +146,20 @@ function HomeView({ category }: { category: string }) {
                 {all_articles
                   .slice(9, 10)
                   .map((articles: Article, index: number) => (
-                    <div className="grid grid-cols-5 gap-3.5 mb-3.5">
-                      <div className="col-span-2 ">
-                        <div className="group cursor-pointer ">
-                          <h2
-                            className="text-black group-hover:underline text-xl md:text-2xl xl:text-3xl
-                         font-bold pt-2"
-                          >
-                            {articles.title}
-                          </h2>
+                    <div className="grid grid-cols-5 gap-3.5 mb-3.5 group cursor-pointer ">
+                      <div className="col-span-2 flex flex-col  justify-center text-start">
+                        <h2 className="text-black group-hover:underline text-xl md:text-2xl xl:text-3xl font-bold pt-2">
+                          {articles.title}
+                        </h2>
 
-                          <p className="text-black text-sm pt-3">
-                            {articles.description}
-                          </p>
-                          <p className="text-[12px] pt-3.5 text-black">
-                            {formatPublishedDate(articles.publishedAt)}
-                          </p>
-
-                          {/* <div className="border-b border-gray-200 w-full pt-2 mb-4"></div> */}
-                        </div>
+                        <p className="text-black text-sm pt-3">
+                          {articles.description}
+                        </p>
+                        <p className="text-[12px] pt-3.5 text-black">
+                          {formatPublishedDate(articles.publishedAt)}
+                        </p>
                       </div>
+
                       <div className="col-span-3">
                         <img
                           className="object-cover  "
