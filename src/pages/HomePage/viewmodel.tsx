@@ -33,6 +33,8 @@ function useHomeViewModel(category: string) {
   const totalMoreInPages =
     allData.length > 10 ? Math.ceil((allData.length - 10) / itemsPerPage) : 0;
 
+  //abc
+
   return {
     all_articles: allData,
     isAllLoading,

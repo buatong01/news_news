@@ -1,6 +1,6 @@
 import save from "../../assets/save.png";
 import share from "../../assets/share.png";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNewsContext } from "../../context/newcontext";
 import { useMemo } from "react";
 import { formatPublishedDate } from "../../utils/formatedate";
@@ -13,12 +13,13 @@ import NewsBox from "../../components/NewsBox";
 function DetailView() {
   const { index } = useParams();
   const { articles } = useNewsContext();
-  const nevigate = useNavigate();
 
   const article = useMemo(() => {
     if (!articles || !index) return undefined;
     return articles[Number(index)];
   }, [articles, index]);
+
+  //abc
 
   // if (!articles) {
   //   return (

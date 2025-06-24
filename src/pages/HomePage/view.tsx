@@ -26,6 +26,8 @@ function HomeView({ category }: { category: string }) {
     startIndex,
   } = useHomeViewModel(category);
 
+  //abc
+
   return (
     <div className="w-full min-h-screen bg-white pt-[45px] sm:pt-[48px] md:pt-[80px] lg:pt-[122px] px-4  xl:px-25 ">
       {/* box 1 */}
