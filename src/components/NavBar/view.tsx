@@ -3,8 +3,14 @@ import menu from "../../assets/menu.png";
 import avatar from "../../assets/avatar.png";
 import x from "../../assets/x.png";
 import { useState } from "react";
-function NavBarView() {
+import { useNavigate } from "react-router-dom";
+function NavBarView({
+  onCategoryChange,
+}: {
+  onCategoryChange: (category: string) => void;
+}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const nevigate = useNavigate();
 
   return (
     <div className="bg-white w-screen fixed top-0 left-0 z-50">
@@ -65,15 +71,26 @@ function NavBarView() {
       </div>
 
       <div className="border-b border-gray-200 h-[42px] items-center justify-center hidden lg:flex ">
-        <button className="text-black text-sm font-semibold h-full px-2.5">
-          Home
-        </button>
-        <button className="text-black text-sm font-semibold h-full px-2.5">
-          Home
-        </button>
-        <button className="text-black text-sm font-semibold h-full px-2.5">
-          Home
-        </button>
+        {[
+          { label: "Home", value: "" }, // general
+          { label: "Business", value: "business" },
+          { label: "Entertainment", value: "entertainment" },
+          { label: "Health", value: "health" },
+          { label: "Science", value: "science" },
+          { label: "Sports", value: "sports" },
+          { label: "Technology", value: "technology" },
+        ].map(({ label, value }) => (
+          <button
+            key={value}
+            className="text-black text-sm font-semibold h-full px-2.5 capitalize"
+            onClick={() => {
+              nevigate("/");
+              onCategoryChange(value);
+            }}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {isMenuOpen && (
