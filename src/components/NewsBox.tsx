@@ -8,9 +8,17 @@ type ImgNewsProps = {
   isShowImg: boolean;
   isCenter: boolean;
   isLast?: boolean;
+  isShowDescription: boolean;
 };
 
-function NewsBox({ data, index, isShowImg, isCenter, isLast }: ImgNewsProps) {
+function NewsBox({
+  data,
+  index,
+  isShowImg,
+  isCenter,
+  isLast,
+  isShowDescription,
+}: ImgNewsProps) {
   const nevigate = useNavigate();
   if (!data) return null;
   const formatDate = formatPublishedDate(data.publishedAt);
@@ -36,7 +44,9 @@ function NewsBox({ data, index, isShowImg, isCenter, isLast }: ImgNewsProps) {
       >
         {data.title}
       </h2>
-      <p className="text-black text-sm pt-3">{data.description}</p>
+      {isShowDescription && (
+        <p className="text-black text-sm pt-3">{data.description}</p>
+      )}
       <p className="text-[12px] pt-3.5 text-black">{formatDate}</p>
 
       {isLast && (

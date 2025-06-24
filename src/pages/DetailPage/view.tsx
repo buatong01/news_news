@@ -2,9 +2,11 @@ import save from "../../assets/save.png";
 import share from "../../assets/share.png";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNewsContext } from "../../context/newcontext";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 import { formatPublishedDate } from "../../utils/formatedate";
 import type { Article } from "../../services/HomeService/types/news";
+import NewsBoxRow from "../../components/NewsBoxRow";
+import NewsBox from "../../components/NewsBox";
 // import "react-loading-skeleton/dist/skeleton.css";
 // import Skeleton from "react-loading-skeleton";
 
@@ -59,7 +61,7 @@ function DetailView() {
 
         <div className="w-full px-4 sm:px-0 xl:px-20 pt-3  text-left flex flex-col">
           <p className="text-black font-sm font-bold">{article.author}</p>
-          <p className="text-black text-[12px]">BBC News</p>
+          <p className="text-black text-[12px]">{article.source.name}</p>
         </div>
 
         <div className=" sm:hidden w-full px-4 sm:px-0 xl:px-20 pt-2.5 text-black text-[12px] flex justify-end border-t border-gray-200">
@@ -101,18 +103,14 @@ function DetailView() {
 
         <div className="pt-5 pb-12 gap-6 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {articles.slice(7, 10).map((articles: Article, index: number) => (
-            <div
-              onClick={() => nevigate(`/detail/${7 + index}`)}
-              className="group cursor-pointer"
-            >
-              <p className="text-black text-base font-semibold group-hover:underline">
-                {articles.title}{" "}
-              </p>
-              <p className="text-[12px] pt-3.5 text-black">
-                {formatPublishedDate(articles.publishedAt)}
-              </p>
-              <div className="border-b border-gray-200 w-full mt-2 flex sm:hidden"></div>
-            </div>
+            <NewsBox
+              data={articles}
+              index={7 + index}
+              isShowImg={false}
+              isCenter={false}
+              isShowDescription={false}
+              isLast={false}
+            />
           ))}
         </div>
       </div>
@@ -124,35 +122,7 @@ function DetailView() {
         </h3>
         <div>
           {articles.slice(10, 14).map((articles: Article, index: number) => (
-            <div
-              onClick={() => nevigate(`/detail/${10 + index}`)}
-              className="grid grid-cols-12 gap-6 pt-5 cursor-pointer group"
-            >
-              <p className="text-[12px] text-black col-span-2 hidden sm:flex  justify-end items-start ">
-                {formatPublishedDate(articles.publishedAt)}
-              </p>
-              <div className=" col-span-8 sm:col-span-6">
-                <h3 className="text-black text-[18px] sm:text-xl font-bold group-hover:underline">
-                  {articles.title}
-                </h3>
-                <p className="text-black text-sm">{article.description}</p>
-              </div>
-              <img
-                className="w-[300px] h-[168px] object-cover col-span-4"
-                src={
-                  articles.urlToImage ??
-                  "https://i.pinimg.com/736x/94/2d/7b/942d7b770176b84541f4356ec87a0e09.jpg"
-                }
-                alt="news"
-              />
-              <div className="col-span-12 sm:col-start-3 sm:col-span-10 pb-9">
-                <p className="text-[12px] sm:flex hidden text-black">World</p>
-                <p className="text-[12px] sm:hidden flex text-black">
-                  {formatPublishedDate(articles.publishedAt)}| World
-                </p>
-                <div className="border-b border-gray-200 w-full mt-2"></div>
-              </div>
-            </div>
+            <NewsBoxRow data={articles} index={10 + index} />
           ))}
         </div>
       </div>
