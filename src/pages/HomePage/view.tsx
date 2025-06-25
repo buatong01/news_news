@@ -288,12 +288,12 @@ function HomeView({ category }: { category: string }) {
       {/* อันที่งง ฟ้ามแตะ */}
 
       {/* เลื่อนๆ */}
-      {/* <MustRead everything_articles={everything_articles} /> */}
+      <MustRead everything_articles={everything_articles} />
 
       {/* เลื่อนๆ */}
 
       {/* แยก category ไรนักหนาวะ */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-9">
         {["trump", "business", "animal", "science"].map((cat) => (
           <div className="border-t-2 border-black" key={cat}>
             <h3 className="text-black font-extrabold pt-1 pb-4">
@@ -334,7 +334,7 @@ function HomeView({ category }: { category: string }) {
         <div></div>
       ) : (
         category !== "" && (
-          <div className="w-full pt-6">
+          <div className="w-full pt-6 ">
             <div className="text-black border-t-2 border-black" />
             <h3 className="text-sm md:text-base font-extrabold pt-2 text-black">
               MORE IN {category.toLocaleUpperCase()}

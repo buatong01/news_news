@@ -1,29 +1,51 @@
-import { useRef } from "react";
+import { useState, useEffect } from "react";
 import type { Article } from "../services/HomeService/types/news";
 import NewsBox from "./NewsBox";
 
 function MustRead({ everything_articles }: { everything_articles: Article[] }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  // Responsive: ปรับจำนวนข่าวต่อหน้า
+  const getItemsPerPage = () => {
+    if (window.innerWidth >= 1280) return 4; // xl
+    if (window.innerWidth >= 1024) return 4; // lg
+    if (window.innerWidth >= 768) return 3; // md
+    if (window.innerWidth >= 640) return 2; // sm
+    return 1; // xs
+  };
+
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
+  const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setItemsPerPage(getItemsPerPage());
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const sortedArticles = everything_articles
     .sort(
-      (a: Article, b: Article) =>
+      (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
     )
-    .slice(15, 25); // เลือกแค่ 10 ข่าว
+    .slice(15, 25);
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.offsetWidth; // ความกว้าง container
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
+  const totalPages = Math.ceil(sortedArticles.length / itemsPerPage);
+
+  const handlePrev = () => {
+    setCurrentPage((prev) => Math.max(0, prev - 1));
   };
 
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+  };
+
+  const startIdx = currentPage * itemsPerPage;
+  const currentArticles = sortedArticles.slice(
+    startIdx,
+    startIdx + itemsPerPage
+  );
+
   return (
-    <div className="mt-6">
+    <div className="my-6">
       <div className="text-black border-t-2 border-black" />
       <div className="flex items-center justify-between pt-2">
         <h3 className="text-sm md:text-base font-extrabold text-black">
@@ -31,29 +53,24 @@ function MustRead({ everything_articles }: { everything_articles: Article[] }) {
         </h3>
         <div className="flex gap-2">
           <button
-            onClick={() => scroll("left")}
+            onClick={handlePrev}
             className="px-4 py-2 bg-white text-black font-bold"
+            disabled={currentPage === 0}
           >
             &lt;
           </button>
           <button
-            onClick={() => scroll("right")}
+            onClick={handleNext}
             className="px-4 py-2 bg-white text-black font-bold"
+            disabled={currentPage === totalPages - 1}
           >
             &gt;
           </button>
         </div>
       </div>
-
-      <div
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-4"
-      >
-        {sortedArticles.map((article: Article, index: number) => (
-          <div
-            key={article.title}
-            className="flex-shrink-0 snap-start w-[95%] sm:w-[48%] md:w-[30%]"
-          >
+      <div className="flex gap-4 py-4 justify-center">
+        {currentArticles.map((article, index) => (
+          <div key={article.title} className="w-full max-w-xs">
             <NewsBox
               data={article}
               index={index}
