@@ -19,7 +19,7 @@ function App() {
             categorySelected={category}
             onCategoryChange={setCategory}
           />
-          <Routers category={category} />
+          <Routers category={category} onCategoryChange={setCategory} />
           <FooterView onCategoryChange={setCategory} />
         </SearchProvider>
       </NewsProvider>

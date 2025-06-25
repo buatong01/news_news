@@ -3,21 +3,33 @@ import type { Article } from "../services/HomeService/type";
 
 type SearchContextType = {
   searchArticles: Article[];
-  setSearchArtivles: (seachArticles: Article[]) => void;
+  setSearchArtivles: (searchArticles: Article[]) => void;
+  isDrawerOpen: boolean;
+  setIsDrawerOpen: (isOpen: boolean) => void;
 };
 
 const SearchContext = createContext<SearchContextType>({
   searchArticles: [],
   setSearchArtivles: () => {},
+  isDrawerOpen: false,
+  setIsDrawerOpen: () => {},
 });
 
 export const useSearchContext = () => useContext(SearchContext);
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchArticles, setSearchArtivles] = useState<Article[]>([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <SearchContext.Provider value={{ searchArticles, setSearchArtivles }}>
+    <SearchContext.Provider
+      value={{
+        searchArticles,
+        setSearchArtivles,
+        isDrawerOpen,
+        setIsDrawerOpen,
+      }}
+    >
       {children}
     </SearchContext.Provider>
   );

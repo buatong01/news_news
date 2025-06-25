@@ -4,6 +4,8 @@ import avatar from "../../assets/avatar.png";
 import x from "../../assets/x.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSearchContext } from "../../context/SearchContext";
+
 function NavBarView({
   categorySelected,
   onCategoryChange,
@@ -15,23 +17,37 @@ function NavBarView({
 
   const nevigate = useNavigate();
 
+  const { isDrawerOpen, setIsDrawerOpen } = useSearchContext();
+
   return (
     <div className="bg-white w-screen fixed top-0 left-0 z-50">
       <div className="border-b border-gray-200 relative md:h-[80px] lg:h-[80px] sm:h-[48px]">
         <div className="flex items-center justify-between px-4 py-3 h-full ">
           {/* search menu */}
-          <button className="relative flex flex-row items-cente">
-            <img
-              src={menu}
-              alt="menu"
-              className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 z-10"
-            />
-            <img
-              src={search}
-              alt="search"
-              className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 absolute left-[14px] sm:left-[16px] md:left-[18px] bg-white rounded-full z-20"
-            />
-          </button>
+          {isDrawerOpen ? (
+            <button
+              onClick={() => setIsDrawerOpen(false)}
+              className="relative flex flex-row items-cente"
+            >
+              <img src={x} alt="x" className="h-5 w-5 sm:h-6 sm:w-6  " />
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsDrawerOpen(true)}
+              className="relative flex flex-row items-cente"
+            >
+              <img
+                src={menu}
+                alt="menu"
+                className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 z-10"
+              />
+              <img
+                src={search}
+                alt="search"
+                className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 absolute left-[14px] sm:left-[16px] md:left-[18px] bg-white rounded-full z-20"
+              />
+            </button>
+          )}
 
           <div className="flex flex-row items-center gap-3">
             <div className="hidden sm:flex gap-3">
@@ -91,6 +107,7 @@ function NavBarView({
             onClick={() => {
               nevigate("/");
               onCategoryChange(value);
+              setIsDrawerOpen(false);
             }}
           >
             {label}
