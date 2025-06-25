@@ -1,10 +1,10 @@
 import NewsBox from "../../components/NewsBox";
 import NewsBoxRow from "../../components/NewsBoxRow";
 import NewsBoxRowTwo from "../../components/NewsBoxRowTwo";
+import NewBoxImg from "../../components/NewBoxImg";
 import type { Article } from "../../services/HomeService/types/news";
 import useHomeViewModel from "./viewmodel";
-import { formatPublishedDate } from "../../utils/formatedate";
-
+import MustRead from "../../components/MustReadBox";
 // Simple Skeleton component
 function SkeletonBox({ height = 120 }: { height?: number }) {
   return (
@@ -155,31 +155,7 @@ function HomeView({ category }: { category: string }) {
                 {all_articles
                   .slice(9, 10)
                   .map((articles: Article, index: number) => (
-                    <div className="grid grid-cols-5 gap-3.5 mb-3.5 group cursor-pointer ">
-                      <div className="col-span-2 flex flex-col  justify-center text-start">
-                        <h2 className="text-black group-hover:underline text-xl md:text-2xl xl:text-3xl font-bold pt-2">
-                          {articles.title}
-                        </h2>
-
-                        <p className="text-black text-sm pt-3">
-                          {articles.description}
-                        </p>
-                        <p className="text-[12px] pt-3.5 text-black">
-                          {formatPublishedDate(articles.publishedAt)}
-                        </p>
-                      </div>
-
-                      <div className="col-span-3 flex items-center justify-center">
-                        <img
-                          className="object-cover"
-                          src={
-                            articles.urlToImage ??
-                            "https://i.pinimg.com/736x/94/2d/7b/942d7b770176b84541f4356ec87a0e09.jpg"
-                          }
-                          alt="news"
-                        />
-                      </div>
-                    </div>
+                    <NewBoxImg data={articles} index={9 + index} />
                   ))}
                 <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-3.5">
                   {all_articles
@@ -311,113 +287,45 @@ function HomeView({ category }: { category: string }) {
       )}
       {/* อันที่งง ฟ้ามแตะ */}
 
+      {/* เลื่อนๆ */}
+      {/* <MustRead everything_articles={everything_articles} /> */}
+
+      {/* เลื่อนๆ */}
+
       {/* แยก category ไรนักหนาวะ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div className="border-t-2 border-black">
-          <h3 className="text-black font-extrabold pt-1 pb-4">TRUMP &gt;</h3>
-          {everything_articles
-            .filter(
-              (article: Article) => article.category?.toLowerCase() === "trump"
-            )
-            .sort(
-              (a: Article, b: Article) =>
-                new Date(b.publishedAt).getTime() -
-                new Date(a.publishedAt).getTime()
-            )
-            .slice(0, 4)
-            .map((articles: Article, index: number) => (
-              <NewsBox
-                key={articles.title}
-                data={articles}
-                index={0 + index}
-                category={articles.category ?? "head"}
-                isShowImg={index === 0}
-                isCenter={false}
-                isShowDescription={index === 0}
-                isLast={index !== 3}
-              />
-            ))}
-        </div>
-
-        <div className="border-t-2 border-black">
-          <h3 className="text-black font-extrabold pt-1 pb-4">BUSINESS &gt;</h3>
-          {everything_articles
-            .filter(
-              (article: Article) =>
-                article.category?.toLowerCase() === "business"
-            )
-            .sort(
-              (a: Article, b: Article) =>
-                new Date(b.publishedAt).getTime() -
-                new Date(a.publishedAt).getTime()
-            )
-            .slice(0, 4)
-            .map((articles: Article, index: number) => (
-              <NewsBox
-                key={articles.title}
-                data={articles}
-                index={0 + index}
-                category={articles.category ?? "head"}
-                isShowImg={index === 0}
-                isCenter={false}
-                isShowDescription={index === 0}
-                isLast={index !== 3}
-              />
-            ))}
-        </div>
-
-        <div className="border-t-2 border-black">
-          <h3 className="text-black font-extrabold pt-1 pb-4">ANIMAL &gt;</h3>
-          {everything_articles
-            .filter(
-              (article: Article) => article.category?.toLowerCase() === "animal"
-            )
-            .sort(
-              (a: Article, b: Article) =>
-                new Date(b.publishedAt).getTime() -
-                new Date(a.publishedAt).getTime()
-            )
-            .slice(0, 4)
-            .map((articles: Article, index: number) => (
-              <NewsBox
-                key={articles.title}
-                data={articles}
-                index={0 + index}
-                category={articles.category ?? "head"}
-                isShowImg={index === 0}
-                isCenter={false}
-                isShowDescription={index === 0}
-                isLast={index !== 3}
-              />
-            ))}
-        </div>
-
-        <div className="border-t-2 border-black">
-          <h3 className="text-black font-extrabold pt-1 pb-4">SCIENCE &gt;</h3>
-          {everything_articles
-            .filter(
-              (article: Article) =>
-                article.category?.toLowerCase() === "science"
-            )
-            .sort(
-              (a: Article, b: Article) =>
-                new Date(b.publishedAt).getTime() -
-                new Date(a.publishedAt).getTime()
-            )
-            .slice(0, 4)
-            .map((articles: Article, index: number) => (
-              <NewsBox
-                key={articles.title}
-                data={articles}
-                index={0 + index}
-                category={articles.category ?? "head"}
-                isShowImg={index === 0}
-                isCenter={false}
-                isShowDescription={index === 0}
-                isLast={index !== 3}
-              />
-            ))}
-        </div>
+        {["trump", "business", "animal", "science"].map((cat) => (
+          <div className="border-t-2 border-black" key={cat}>
+            <h3 className="text-black font-extrabold pt-1 pb-4">
+              {cat.toUpperCase()} &gt;
+            </h3>
+            {isEverythingLoading
+              ? [1, 2, 3, 4].map((i) => <SkeletonBox key={i} height={80} />)
+              : everything_articles
+                  .filter(
+                    (article: Article) =>
+                      article.category?.toLowerCase() === cat
+                  )
+                  .sort(
+                    (a: Article, b: Article) =>
+                      new Date(b.publishedAt).getTime() -
+                      new Date(a.publishedAt).getTime()
+                  )
+                  .slice(0, 4)
+                  .map((articles: Article, index: number) => (
+                    <NewsBox
+                      key={articles.title}
+                      data={articles}
+                      index={0 + index}
+                      category={articles.category ?? "head"}
+                      isShowImg={index === 0}
+                      isCenter={false}
+                      isShowDescription={index === 0}
+                      isLast={index !== 3}
+                    />
+                  ))}
+          </div>
+        ))}
       </div>
       {/* แยก category ไรนักหนาวะ */}
 
