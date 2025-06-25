@@ -7,18 +7,22 @@ import { formatPublishedDate } from "../../utils/formatedate";
 import type { Article } from "../../services/HomeService/type";
 import NewsBoxRow from "../../components/NewsBox/NewsBoxRow";
 import NewsBox from "../../components/NewsBox/NewsBox";
+import { useSearchContext } from "../../context/SearchContext";
 // import "react-loading-skeleton/dist/skeleton.css";
 // import Skeleton from "react-loading-skeleton";
 
 function DetailView() {
   const { index, category } = useParams();
   const { articles, everythingArticles } = useNewsContext();
+  const { searchArticles } = useSearchContext();
 
   const article = useMemo(() => {
     if (!articles || !index) return undefined;
 
     if (category === "head") {
       return articles[Number(index)];
+    } else if (category === "search") {
+      return searchArticles[Number(index)];
     } else {
       const result = everythingArticles
         .filter(
@@ -30,6 +34,27 @@ function DetailView() {
             new Date(a.publishedAt).getTime()
         );
       return result[Number(index)];
+    }
+  }, [articles, everythingArticles, category, index]);
+
+  const articless = useMemo(() => {
+    if (!articles || !index) return undefined;
+
+    if (category === "head") {
+      return articles;
+    } else if (category === "search") {
+      return searchArticles;
+    } else {
+      const result = everythingArticles
+        .filter(
+          (article: Article) => article.category?.toLowerCase() === category
+        )
+        .sort(
+          (a: Article, b: Article) =>
+            new Date(b.publishedAt).getTime() -
+            new Date(a.publishedAt).getTime()
+        );
+      return result;
     }
   }, [articles, everythingArticles, category, index]);
 
@@ -119,39 +144,23 @@ function DetailView() {
         </h3>
 
         <div className="pt-5 pb-12 gap-6 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {category === "head"
-            ? articles
-                .slice(7, 10)
-                .map((articles: Article, index: number) => (
-                  <NewsBox
-                    data={articles}
-                    index={7 + index}
-                    category="head"
-                    isShowImg={false}
-                    isCenter={false}
-                    isShowDescription={false}
-                    isLast={false}
-                  />
-                ))
-            : everythingArticles
-                .filter((article: Article) => article.category === category)
-                .sort(
-                  (a: Article, b: Article) =>
-                    new Date(b.publishedAt).getTime() -
-                    new Date(a.publishedAt).getTime()
-                )
-                .slice(7, 10)
-                .map((articles: Article, index: number) => (
-                  <NewsBox
-                    data={articles}
-                    index={7 + index}
-                    category={category ?? "head"}
-                    isShowImg={false}
-                    isCenter={false}
-                    isShowDescription={false}
-                    isLast={false}
-                  />
-                ))}
+          {articless?.slice(7, 10).map((articles: Article, index: number) => (
+            <NewsBox
+              data={articles}
+              index={7 + index}
+              category={
+                category === "head"
+                  ? "head"
+                  : category === "search"
+                  ? "search"
+                  : category ?? "head"
+              }
+              isShowImg={false}
+              isCenter={false}
+              isShowDescription={false}
+              isLast={false}
+            />
+          ))}
         </div>
       </div>
 
@@ -161,31 +170,19 @@ function DetailView() {
           MORE FROM THE BBC
         </h3>
         <div>
-          {category === "head"
-            ? articles
-                .slice(10, 14)
-                .map((articles: Article, index: number) => (
-                  <NewsBoxRow
-                    data={articles}
-                    index={10 + index}
-                    category="head"
-                  />
-                ))
-            : everythingArticles
-                .filter((article: Article) => article.category === category)
-                .sort(
-                  (a: Article, b: Article) =>
-                    new Date(b.publishedAt).getTime() -
-                    new Date(a.publishedAt).getTime()
-                )
-                .slice(10, 14)
-                .map((articles: Article, index: number) => (
-                  <NewsBoxRow
-                    data={articles}
-                    index={10 + index}
-                    category={category ?? "head"}
-                  />
-                ))}
+          {articless?.slice(10, 14).map((articles: Article, index: number) => (
+            <NewsBoxRow
+              data={articles}
+              index={10 + index}
+              category={
+                category === "head"
+                  ? "head"
+                  : category === "search"
+                  ? "search"
+                  : category ?? "head"
+              }
+            />
+          ))}
         </div>
       </div>
     </div>

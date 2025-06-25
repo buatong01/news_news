@@ -7,8 +7,8 @@ function Routers({ category }: { category: string }) {
   return (
     <Routes>
       <Route path="/" element={<HomeView category={category} />} />
+      <Route path="/search/" element={<SearchView />} />
       <Route path="/detail/:index/:category" element={<DetailView />} />
-      <Route path="/search/:topic" element={<SearchView />} />
     </Routes>
   );
 }

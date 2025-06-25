@@ -237,7 +237,7 @@ function HomeView({ category }: { category: string }) {
                 ))}
             </div>
 
-            <div className=" sm:hidden grid grid-cols-1 ">
+            <div className="sm:hidden grid grid-cols-1 ">
               {all_articles
                 .slice(10, 13)
                 .map((articles: Article, index: number) => (
@@ -356,11 +356,11 @@ function HomeView({ category }: { category: string }) {
 
             {/* Pagination */}
             {totalMoreInPages > 0 && (
-              <div className="flex justify-center gap-2 mt-4 mb-4">
+              <div className="flex flex-wrap justify-center gap-x-2 gap-y-2 mt-4 mb-4">
                 <button
                   onClick={() => setMoreInPage((prev) => Math.max(prev - 1, 1))}
                   disabled={moreInPage === 1}
-                  className="px-4 py-2 bg-gray-100 text-black font-bold "
+                  className="w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2 bg-gray-100 text-black font-bold rounded"
                 >
                   &lt;
                 </button>
@@ -369,7 +369,7 @@ function HomeView({ category }: { category: string }) {
                   <button
                     key={idx}
                     onClick={() => setMoreInPage(idx + 1)}
-                    className={`px-4 py-2 ${
+                    className={`w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2  ${
                       moreInPage === idx + 1
                         ? "bg-black text-white font-bold"
                         : "bg-gray-100 text-black font-bold"
@@ -386,7 +386,7 @@ function HomeView({ category }: { category: string }) {
                     )
                   }
                   disabled={moreInPage === totalMoreInPages}
-                  className="px-4 py-2 bg-gray-100 text-black font-bold "
+                  className="w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2 bg-gray-100 text-black font-bold "
                 >
                   &gt;
                 </button>

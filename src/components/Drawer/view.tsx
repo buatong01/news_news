@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import search from "../../assets/search.png";
+import { useState } from "react";
+import searchImg from "../../assets/search.png";
 import { useSearchContext } from "../../context/SearchContext";
 
 type DrawerType = {
@@ -11,34 +12,36 @@ type DrawerType = {
 function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
   const nevigate = useNavigate();
   const { searchTopic, setSearchTopic, setIsDrawerOpen } = useSearchContext();
+  const [search, setSearch] = useState<string>("");
 
   return (
     <>
       <div
         onClick={onclose}
-        className="fixed inset-0 top-20 bg-black opacity-20 z-40"
+        className="fixed inset-0 top-11 sm:top-12 md:top-20  bg-black opacity-20 z-40"
       ></div>
-      <div className="fixed left-0  top-20 h-full w-[320px] bg-white flex justify-start z-50">
+      <div className="fixed left-0 top-11 sm:top-12 md:top-20  h-full w-full sm:w-[320px] bg-white flex justify-start z-50">
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full h-[60px] px-2 py-2 flex flex-row">
             <form
               className="flex flex-row w-full h-full"
               onSubmit={(e) => {
                 e.preventDefault();
-                nevigate(`/search/${searchTopic}`);
+                nevigate(`/search`);
                 setIsDrawerOpen(false);
+                setSearchTopic(search);
               }}
             >
               <input
                 type="text"
                 className="border border-black w-full h-full text-black bg-white placeholder-gray-700 px-2"
                 placeholder="Search news,topics and more"
-                value={searchTopic}
-                onChange={(e) => setSearchTopic(e.target.value)}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
               <button type="submit" className="bg-black px-3.5">
                 <img
-                  src={search}
+                  src={searchImg}
                   alt="search"
                   className=" object-cover h-7 w-7 filter invert "
                 />
