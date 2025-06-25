@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import search from "../../assets/search.png";
+import { useSearchContext } from "../../context/SearchContext";
 
 type DrawerType = {
   onclose: () => void;
@@ -9,28 +10,40 @@ type DrawerType = {
 
 function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
   const nevigate = useNavigate();
+  const { searchTopic, setSearchTopic, setIsDrawerOpen } = useSearchContext();
 
   return (
     <>
       <div
         onClick={onclose}
-        className="fixed inset-0 bg-black opacity-50 z-40"
+        className="fixed inset-0 top-20 bg-black opacity-20 z-40"
       ></div>
-      <div className="fixed left-0  h-full w-[320px] bg-white flex justify-start z-50">
+      <div className="fixed left-0  top-20 h-full w-[320px] bg-white flex justify-start z-50">
         <div className="flex flex-col w-full">
           <div className="bg-gray-200 w-full h-[60px] px-2 py-2 flex flex-row">
-            <input
-              type="text"
-              className="border border-black w-full h-full text-black bg-white placeholder-gray-700 px-2"
-              placeholder="Search news,topics and more"
-            />
-            <button className="bg-black px-3.5">
-              <img
-                src={search}
-                alt="search"
-                className=" object-cover h-7 w-7 filter invert "
+            <form
+              className="flex flex-row w-full h-full"
+              onSubmit={(e) => {
+                e.preventDefault();
+                nevigate(`/search/${searchTopic}`);
+                setIsDrawerOpen(false);
+              }}
+            >
+              <input
+                type="text"
+                className="border border-black w-full h-full text-black bg-white placeholder-gray-700 px-2"
+                placeholder="Search news,topics and more"
+                value={searchTopic}
+                onChange={(e) => setSearchTopic(e.target.value)}
               />
-            </button>
+              <button type="submit" className="bg-black px-3.5">
+                <img
+                  src={search}
+                  alt="search"
+                  className=" object-cover h-7 w-7 filter invert "
+                />
+              </button>
+            </form>
           </div>
 
           <div className="flex flex-col justify-start w-full h-[304px]">

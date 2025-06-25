@@ -1,6 +1,6 @@
 import type { Article } from "../HomeService/type";
 
-function useNavBarService() {
+function useSearchService() {
   // const API_KEY = "6097fc392c524d8f8e1566a4c18d4ef0";
   const API_KEY = "b7dac6dcef4a49ddad7b283a50d165da";
 
@@ -23,4 +23,4 @@ function useNavBarService() {
   };
 }
 
-export default useNavBarService;
+export default useSearchService;

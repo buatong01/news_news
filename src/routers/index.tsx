@@ -1,23 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import HomeView from "../pages/HomePage/view";
 import DetailView from "../pages/DetailPage/view";
+import SearchView from "../pages/SearchPage/view";
 
-function Routers({
-  category,
-  onCategoryChange,
-}: {
-  category: string;
-  onCategoryChange: (category: string) => void;
-}) {
+function Routers({ category }: { category: string }) {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <HomeView category={category} onCategoryChange={onCategoryChange} />
-        }
-      />
+      <Route path="/" element={<HomeView category={category} />} />
       <Route path="/detail/:index/:category" element={<DetailView />} />
+      <Route path="/search/:topic" element={<SearchView />} />
     </Routes>
   );
 }

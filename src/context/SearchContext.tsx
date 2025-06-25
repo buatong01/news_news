@@ -6,6 +6,8 @@ type SearchContextType = {
   setSearchArtivles: (searchArticles: Article[]) => void;
   isDrawerOpen: boolean;
   setIsDrawerOpen: (isOpen: boolean) => void;
+  searchTopic: string;
+  setSearchTopic: (search: string) => void;
 };
 
 const SearchContext = createContext<SearchContextType>({
@@ -13,6 +15,8 @@ const SearchContext = createContext<SearchContextType>({
   setSearchArtivles: () => {},
   isDrawerOpen: false,
   setIsDrawerOpen: () => {},
+  searchTopic: "",
+  setSearchTopic: () => {},
 });
 
 export const useSearchContext = () => useContext(SearchContext);
@@ -20,6 +24,7 @@ export const useSearchContext = () => useContext(SearchContext);
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchArticles, setSearchArtivles] = useState<Article[]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [searchTopic, setSearchTopic] = useState<string>("");
 
   return (
     <SearchContext.Provider
@@ -28,6 +33,8 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         setSearchArtivles,
         isDrawerOpen,
         setIsDrawerOpen,
+        searchTopic,
+        setSearchTopic,
       }}
     >
       {children}

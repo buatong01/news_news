@@ -5,8 +5,6 @@ import NewBoxImg from "../../components/NewsBox/NewBoxImg";
 import type { Article } from "../../services/HomeService/type";
 import useHomeViewModel from "./viewmodel";
 import MustRead from "../../components/NewsBox/MustReadBox";
-import { useSearchContext } from "../../context/SearchContext";
-import Darwer from "../../components/Drawer/view";
 
 // Simple Skeleton component
 function SkeletonBox({ height = 120 }: { height?: number }) {
@@ -18,13 +16,7 @@ function SkeletonBox({ height = 120 }: { height?: number }) {
   );
 }
 
-function HomeView({
-  category,
-  onCategoryChange,
-}: {
-  category: string;
-  onCategoryChange: (category: string) => void;
-}) {
+function HomeView({ category }: { category: string }) {
   const {
     all_articles,
     isAllLoading,
@@ -37,17 +29,8 @@ function HomeView({
     everything_articles,
   } = useHomeViewModel(category);
 
-  const { isDrawerOpen, setIsDrawerOpen } = useSearchContext();
-
   return (
     <div className="w-full min-h-screen bg-white pt-[45px] sm:pt-[48px] md:pt-[80px] lg:pt-[122px] px-4  xl:px-25 ">
-      {isDrawerOpen && (
-        <Darwer
-          onclose={() => setIsDrawerOpen(false)}
-          categorySelected={category}
-          onCategoryChange={onCategoryChange}
-        />
-      )}
       {/* box 1 */}
       <div className="grid grid-cols-8 sm:grid-cols-12 lg:grid-cols-16 gap-5">
         <div className="hidden sm:block sm:col-span-4 py-5">

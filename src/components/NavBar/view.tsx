@@ -5,6 +5,7 @@ import x from "../../assets/x.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchContext } from "../../context/SearchContext";
+import Darwer from "../Drawer/view";
 
 function NavBarView({
   categorySelected,
@@ -128,6 +129,14 @@ function NavBarView({
             Register
           </button>
         </div>
+      )}
+
+      {isDrawerOpen && (
+        <Darwer
+          onclose={() => setIsDrawerOpen(false)}
+          categorySelected={""}
+          onCategoryChange={onCategoryChange}
+        />
       )}
 
       {isMenuOpen && (
