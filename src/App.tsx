@@ -1,6 +1,4 @@
-import { Routes, Route } from "react-router-dom";
-import HomeView from "./pages/HomePage/view";
-import DetailView from "./pages/DetailPage/view";
+import Routers from "./routers/index";
 import NavBarView from "./components/NavBar";
 import FooterView from "./components/Footer";
 import "./App.css";
@@ -19,10 +17,7 @@ function App() {
           categorySelected={category}
           onCategoryChange={setCategory}
         />
-        <Routes>
-          <Route path="/" element={<HomeView category={category} />} />
-          <Route path="/detail/:index/:category" element={<DetailView />} />
-        </Routes>
+        <Routers category={category} />
         <FooterView onCategoryChange={setCategory} />
       </NewsProvider>
     </>

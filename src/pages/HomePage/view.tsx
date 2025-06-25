@@ -288,45 +288,49 @@ function HomeView({ category }: { category: string }) {
       {/* อันที่งง ฟ้ามแตะ */}
 
       {/* เลื่อนๆ */}
-      <MustRead everything_articles={everything_articles} />
+      {category === "" && (
+        <MustRead everything_articles={everything_articles} />
+      )}
 
       {/* เลื่อนๆ */}
 
       {/* แยก category ไรนักหนาวะ */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-9">
-        {["trump", "business", "animal", "science"].map((cat) => (
-          <div className="border-t-2 border-black" key={cat}>
-            <h3 className="text-black font-extrabold pt-1 pb-4">
-              {cat.toUpperCase()} &gt;
-            </h3>
-            {isEverythingLoading
-              ? [1, 2, 3, 4].map((i) => <SkeletonBox key={i} height={80} />)
-              : everything_articles
-                  .filter(
-                    (article: Article) =>
-                      article.category?.toLowerCase() === cat
-                  )
-                  .sort(
-                    (a: Article, b: Article) =>
-                      new Date(b.publishedAt).getTime() -
-                      new Date(a.publishedAt).getTime()
-                  )
-                  .slice(0, 4)
-                  .map((articles: Article, index: number) => (
-                    <NewsBox
-                      key={articles.title}
-                      data={articles}
-                      index={0 + index}
-                      category={articles.category ?? "head"}
-                      isShowImg={index === 0}
-                      isCenter={false}
-                      isShowDescription={index === 0}
-                      isLast={index !== 3}
-                    />
-                  ))}
-          </div>
-        ))}
-      </div>
+      {category === "" && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-9">
+          {["trump", "business", "animal", "science"].map((cat) => (
+            <div className="border-t-2 border-black" key={cat}>
+              <h3 className="text-black font-extrabold pt-1 pb-4">
+                {cat.toUpperCase()} &gt;
+              </h3>
+              {isEverythingLoading
+                ? [1, 2, 3, 4].map((i) => <SkeletonBox key={i} height={80} />)
+                : everything_articles
+                    .filter(
+                      (article: Article) =>
+                        article.category?.toLowerCase() === cat
+                    )
+                    .sort(
+                      (a: Article, b: Article) =>
+                        new Date(b.publishedAt).getTime() -
+                        new Date(a.publishedAt).getTime()
+                    )
+                    .slice(0, 4)
+                    .map((articles: Article, index: number) => (
+                      <NewsBox
+                        key={articles.title}
+                        data={articles}
+                        index={0 + index}
+                        category={articles.category ?? "head"}
+                        isShowImg={index === 0}
+                        isCenter={false}
+                        isShowDescription={index === 0}
+                        isLast={index !== 3}
+                      />
+                    ))}
+            </div>
+          ))}
+        </div>
+      )}
       {/* แยก category ไรนักหนาวะ */}
 
       {/* ปุ่มเลื่อน */}
