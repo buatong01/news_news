@@ -1,8 +1,8 @@
-import facebook from "../assets/facebook.png";
-import tiktok from "../assets/tiktok.png";
-import instragram from "../assets/instagram.png";
-import down from "../assets/down.png";
-import up from "../assets/up.png";
+import facebook from "../../assets/facebook.png";
+import tiktok from "../../assets/tiktok.png";
+import instragram from "../../assets/instagram.png";
+import down from "../../assets/down.png";
+import up from "../../assets/up.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

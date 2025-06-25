@@ -1,7 +1,7 @@
-import search from "../assets/search.png";
-import menu from "../assets/menu.png";
-import avatar from "../assets/avatar.png";
-import x from "../assets/x.png";
+import search from "../../assets/search.png";
+import menu from "../../assets/menu.png";
+import avatar from "../../assets/avatar.png";
+import x from "../../assets/x.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 function NavBarView({
@@ -12,6 +12,7 @@ function NavBarView({
   onCategoryChange: (category: string) => void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const nevigate = useNavigate();
 
   return (

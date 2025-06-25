@@ -23,7 +23,7 @@ function useHomeService() {
       });
   };
 
-  const fetchEverythingNews = (): Promise<Article[]> => {
+  const fetchEverythingNews = async (): Promise<Article[]> => {
     const allResults: Article[] = [];
     let promise = Promise.resolve();
 
