@@ -5,8 +5,8 @@ import { useNewsContext } from "../../context/newcontext";
 import { useMemo } from "react";
 import { formatPublishedDate } from "../../utils/formatedate";
 import type { Article } from "../../services/HomeService/types/news";
-import NewsBoxRow from "../../components/NewsBoxRow";
-import NewsBox from "../../components/NewsBox";
+import NewsBoxRow from "../../components/NewsBox/NewsBoxRow";
+import NewsBox from "../../components/NewsBox/NewsBox";
 // import "react-loading-skeleton/dist/skeleton.css";
 // import Skeleton from "react-loading-skeleton";
 

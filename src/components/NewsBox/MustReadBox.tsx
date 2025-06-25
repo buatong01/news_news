@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Article } from "../services/HomeService/types/news";
+import type { Article } from "../../services/HomeService/types/news";
 import NewsBox from "./NewsBox";
 
 function MustRead({ everything_articles }: { everything_articles: Article[] }) {
@@ -9,7 +9,7 @@ function MustRead({ everything_articles }: { everything_articles: Article[] }) {
     if (window.innerWidth >= 1024) return 4; // lg
     if (window.innerWidth >= 768) return 3; // md
     if (window.innerWidth >= 640) return 2; // sm
-    return 1; // xs
+    return 2; // xs
   };
 
   const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());

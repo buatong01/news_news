@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import HomeView from "./pages/HomePage/view";
 import DetailView from "./pages/DetailPage/view";
-import NavBarView from "./components/NavBar/view";
-import FooterView from "./components/Footer/view";
+import NavBarView from "./components/NavBar";
+import FooterView from "./components/Footer";
 import "./App.css";
 import { useState } from "react";
 import { NewsProvider } from "./context/newcontext";
