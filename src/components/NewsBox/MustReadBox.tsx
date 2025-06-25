@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { Article } from "../../services/HomeService/types/news";
 import NewsBox from "./NewsBox";
+import type { Article } from "../../services/HomeService/type";
 
 function MustRead({ everything_articles }: { everything_articles: Article[] }) {
   // Responsive: ปรับจำนวนข่าวต่อหน้า

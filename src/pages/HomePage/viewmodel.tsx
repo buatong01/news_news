@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Article } from "../../services/HomeService/types/news";
-import useHomeService from "../../services/HomeService/service/service";
+import type { Article } from "../../services/HomeService/type";
+import useHomeService from "../../services/HomeService";
 import { useNewsContext } from "../../context/newcontext";
 import { useEffect, useState } from "react";
 
@@ -10,8 +10,6 @@ function useHomeViewModel(category: string) {
 
   const [moreInPage, setMoreInPage] = useState(1);
   const itemsPerPage = 4;
-
-  const categories = ["business", "technology", "science", "trump"];
 
   const { data: allData = [], isLoading: isAllLoading } = useQuery<Article[]>({
     queryKey: ["top-headlines", category],

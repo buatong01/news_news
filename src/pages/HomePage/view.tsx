@@ -2,7 +2,7 @@ import NewsBox from "../../components/NewsBox/NewsBox";
 import NewsBoxRow from "../../components/NewsBox/NewsBoxRow";
 import NewsBoxRowTwo from "../../components/NewsBox/NewsBoxRowTwo";
 import NewBoxImg from "../../components/NewsBox/NewBoxImg";
-import type { Article } from "../../services/HomeService/types/news";
+import type { Article } from "../../services/HomeService/type";
 import useHomeViewModel from "./viewmodel";
 import MustRead from "../../components/NewsBox/MustReadBox";
 // Simple Skeleton component

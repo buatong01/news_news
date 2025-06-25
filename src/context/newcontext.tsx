@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import type { Article } from "../services/HomeService/types/news";
+import type { Article } from "../services/HomeService/type";
 
 type NewsContextType = {
   articles: Article[];

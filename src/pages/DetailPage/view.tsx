@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useNewsContext } from "../../context/newcontext";
 import { useMemo } from "react";
 import { formatPublishedDate } from "../../utils/formatedate";
-import type { Article } from "../../services/HomeService/types/news";
+import type { Article } from "../../services/HomeService/type";
 import NewsBoxRow from "../../components/NewsBox/NewsBoxRow";
 import NewsBox from "../../components/NewsBox/NewsBox";
 // import "react-loading-skeleton/dist/skeleton.css";

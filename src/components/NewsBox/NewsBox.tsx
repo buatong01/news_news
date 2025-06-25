@@ -1,5 +1,5 @@
-import type { Article } from "../services/HomeService/types/news";
-import { formatPublishedDate } from "../utils/formatedate";
+import type { Article } from "../../services/HomeService/type";
+import { formatPublishedDate } from "../../utils/formatedate";
 import { useNavigate } from "react-router-dom";
 
 type ImgNewsProps = {
