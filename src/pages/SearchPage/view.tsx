@@ -28,7 +28,6 @@ function SearchView() {
 
   const [search, setSearch] = useState<string>(searchTopic);
 
-  // ฟังก์ชันช่วย scroll to top และเปลี่ยนหน้า
   const handleSetPage = (page: number) => {
     setMoreInPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });

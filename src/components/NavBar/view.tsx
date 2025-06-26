@@ -109,6 +109,7 @@ function NavBarView({
               nevigate("/");
               onCategoryChange(value);
               setIsDrawerOpen(false);
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
             {label}
