@@ -11,7 +11,7 @@ type DrawerType = {
 
 function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
   const nevigate = useNavigate();
-  const { searchTopic, setSearchTopic, setIsDrawerOpen } = useSearchContext();
+  const { setSearchTopic } = useSearchContext();
   const [search, setSearch] = useState<string>("");
 
   return (
@@ -28,7 +28,7 @@ function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
               onSubmit={(e) => {
                 e.preventDefault();
                 nevigate(`/search`);
-                setIsDrawerOpen(false);
+                onclose();
                 setSearchTopic(search);
               }}
             >
@@ -67,7 +67,7 @@ function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
                 onClick={() => {
                   nevigate("/");
                   onCategoryChange(value);
-                  setIsDrawerOpen(false);
+                  onclose();
                 }}
               >
                 {label}

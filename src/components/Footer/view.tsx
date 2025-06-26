@@ -31,7 +31,7 @@ function FooterView({
 
         <div className="flex flex-col sm:flex-row flex-wrap space-x-5 ">
           {[
-            { label: "Home", value: "" }, // general
+            { label: "Home", value: "general" }, // general
             { label: "Business", value: "business" },
             { label: "Entertainment", value: "entertainment" },
             { label: "Health", value: "health" },
@@ -43,7 +43,7 @@ function FooterView({
               key={value}
               className="text-black text-sm font-semibold pt-5 cursor-pointer hover:underline"
               onClick={() => {
-                nevigate("/");
+                nevigate(value === "general" ? "/" : `/${value}`);
                 onCategoryChange(value);
               }}
             >

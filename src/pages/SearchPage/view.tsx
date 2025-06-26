@@ -1,5 +1,4 @@
 import searchImg from "../../assets/search.png";
-import X from "../../assets/x.png";
 import { useSearchContext } from "../../context/SearchContext";
 import useSearchViewModel from "../SearchPage/viewModel";
 import NewsBoxSearch from "../../components/NewsBox/NewsBoxSearch";
@@ -16,7 +15,7 @@ function SkeletonBox({ height = 120 }: { height?: number }) {
 }
 
 function SearchView() {
-  const { searchTopic, setSearchTopic, setIsDrawerOpen } = useSearchContext();
+  const { searchTopic, setSearchTopic } = useSearchContext();
   const {
     isLoading,
     setMoreInPage,
@@ -39,7 +38,6 @@ function SearchView() {
         className="flex flex-row w-full h-[54px] mt-6 mb-15"
         onSubmit={(e) => {
           e.preventDefault();
-          setIsDrawerOpen(false);
           setSearchTopic(search);
         }}
       >

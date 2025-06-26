@@ -4,7 +4,6 @@ import avatar from "../../assets/avatar.png";
 import x from "../../assets/x.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSearchContext } from "../../context/SearchContext";
 import Darwer from "../Drawer/view";
 
 function NavBarView({
@@ -18,7 +17,7 @@ function NavBarView({
 
   const nevigate = useNavigate();
 
-  const { isDrawerOpen, setIsDrawerOpen } = useSearchContext();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
     <div className="bg-white w-screen fixed top-0 left-0 z-50">
@@ -92,7 +91,7 @@ function NavBarView({
 
       <div className="border-b border-gray-200 h-[42px] items-center justify-center hidden lg:flex ">
         {[
-          { label: "Home", value: "" }, // general
+          { label: "Home", value: "general" }, // general
           { label: "Business", value: "business" },
           { label: "Entertainment", value: "entertainment" },
           { label: "Health", value: "health" },
@@ -106,10 +105,9 @@ function NavBarView({
               categorySelected === value ? "border-b-3 pt-0.5" : ""
             }`}
             onClick={() => {
-              nevigate("/");
+              nevigate(value === "general" ? "/" : `/${value}`);
               onCategoryChange(value);
               setIsDrawerOpen(false);
-              window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
             {label}

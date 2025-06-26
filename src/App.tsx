@@ -5,14 +5,14 @@ import "./App.css";
 import { useState } from "react";
 import { NewsProvider } from "./context/newcontext";
 import { SearchProvider } from "./context/SearchContext";
-import ScrollToTop from "./components/ScrollToTop";
+import useScrollToTop from "./hook/useScrollToTop";
 
 function App() {
   const [category, setCategory] = useState("");
+  useScrollToTop();
 
   return (
     <>
-      <ScrollToTop />
       <NewsProvider>
         <SearchProvider>
           <NavBarView
