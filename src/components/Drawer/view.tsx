@@ -2,16 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import searchImg from "../../assets/search.png";
 import { useSearchContext } from "../../context/SearchContext";
+import { useNewsContext } from "../../context/newcontext";
 
 type DrawerType = {
   onclose: () => void;
-  categorySelected: string;
-  onCategoryChange: (category: string) => void;
 };
 
-function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
+function Drawer({ onclose }: DrawerType) {
   const nevigate = useNavigate();
   const { setSearchTopic } = useSearchContext();
+  const { category, setCategory } = useNewsContext();
   const [search, setSearch] = useState<string>("");
 
   return (
@@ -62,11 +62,11 @@ function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
               <button
                 key={value}
                 className={`text-black text-base font-bold h-full px-5 text-start border-b border-b-gray-200 ${
-                  categorySelected === value ? "border-l-8 pt-0.5" : ""
+                  category === value ? "border-l-8 pt-0.5" : ""
                 }`}
                 onClick={() => {
                   nevigate("/");
-                  onCategoryChange(value);
+                  setCategory(value);
                   onclose();
                 }}
               >

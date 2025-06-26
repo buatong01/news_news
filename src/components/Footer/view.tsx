@@ -5,13 +5,11 @@ import down from "../../assets/down.png";
 import up from "../../assets/up.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useNewsContext } from "../../context/newcontext";
 
-function FooterView({
-  onCategoryChange,
-}: {
-  onCategoryChange: (category: string) => void;
-}) {
+function FooterView() {
   const [isLanguagesOpen, setIsLanguagesOpen] = useState(false);
+  const { setCategory } = useNewsContext();
   const nevigate = useNavigate();
 
   return (
@@ -44,7 +42,7 @@ function FooterView({
               className="text-black text-sm font-semibold pt-5 cursor-pointer hover:underline"
               onClick={() => {
                 nevigate(value === "general" ? "/" : `/${value}`);
-                onCategoryChange(value);
+                setCategory(value);
               }}
             >
               {label}

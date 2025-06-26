@@ -5,19 +5,13 @@ import x from "../../assets/x.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Darwer from "../Drawer/view";
+import { useNewsContext } from "../../context/newcontext";
 
-function NavBarView({
-  categorySelected,
-  onCategoryChange,
-}: {
-  categorySelected: string;
-  onCategoryChange: (category: string) => void;
-}) {
+function NavBarView() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const nevigate = useNavigate();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { category, setCategory } = useNewsContext();
+  const nevigate = useNavigate();
 
   return (
     <div className="bg-white w-screen fixed top-0 left-0 z-50">
@@ -102,11 +96,11 @@ function NavBarView({
           <button
             key={value}
             className={`text-black text-sm font-semibold h-full px-2.5 capitalize ${
-              categorySelected === value ? "border-b-3 pt-0.5" : ""
+              category === value ? "border-b-3 pt-0.5" : ""
             }`}
             onClick={() => {
               nevigate(value === "general" ? "/" : `/${value}`);
-              onCategoryChange(value);
+              setCategory(value);
               setIsDrawerOpen(false);
             }}
           >
@@ -130,13 +124,7 @@ function NavBarView({
         </div>
       )}
 
-      {isDrawerOpen && (
-        <Darwer
-          onclose={() => setIsDrawerOpen(false)}
-          categorySelected={""}
-          onCategoryChange={onCategoryChange}
-        />
-      )}
+      {isDrawerOpen && <Darwer onclose={() => setIsDrawerOpen(false)} />}
 
       {isMenuOpen && (
         <div

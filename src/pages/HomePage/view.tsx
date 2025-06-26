@@ -4,6 +4,7 @@ import NewsBoxRowTwo from "../../components/NewsBox/NewsBoxRowTwo";
 import NewBoxImg from "../../components/NewsBox/NewBoxImg";
 import type { Article } from "../../services/HomeService/type";
 import useHomeViewModel from "./viewmodel";
+import { useNewsContext } from "../../context/newcontext";
 import MustRead from "../../components/NewsBox/MustReadBox";
 
 // Simple Skeleton component
@@ -16,7 +17,8 @@ function SkeletonBox({ height = 120 }: { height?: number }) {
   );
 }
 
-function HomeView({ category }: { category: string }) {
+function HomeView() {
+  const { category } = useNewsContext();
   const {
     all_articles,
     isAllLoading,
