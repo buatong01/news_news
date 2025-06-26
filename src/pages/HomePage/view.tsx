@@ -239,7 +239,7 @@ function HomeView({ category }: { category: string }) {
 
             <div className="sm:hidden grid grid-cols-1 ">
               {all_articles
-                .slice(10, 13)
+                .slice(10, 14)
                 .map((articles: Article, index: number) => (
                   <NewsBoxRowTwo
                     key={articles.title}
@@ -287,9 +287,9 @@ function HomeView({ category }: { category: string }) {
       {/* อันที่งง ฟ้ามแตะ */}
 
       {/* เลื่อนๆ */}
-      {category === "" && (
+      {/* {category === "" && (
         <MustRead everything_articles={everything_articles} />
-      )}
+      )} */}
 
       {/* เลื่อนๆ */}
 
@@ -308,11 +308,7 @@ function HomeView({ category }: { category: string }) {
                       (article: Article) =>
                         article.category?.toLowerCase() === cat
                     )
-                    .sort(
-                      (a: Article, b: Article) =>
-                        new Date(b.publishedAt).getTime() -
-                        new Date(a.publishedAt).getTime()
-                    )
+
                     .slice(0, 4)
                     .map((articles: Article, index: number) => (
                       <NewsBox

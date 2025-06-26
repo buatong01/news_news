@@ -1,74 +1,22 @@
 import save from "../../assets/save.png";
 import share from "../../assets/share.png";
 import { useParams } from "react-router-dom";
-import { useNewsContext } from "../../context/newcontext";
-import { useMemo } from "react";
+// import { useNewsContext } from "../../context/newcontext";
+// import { useMemo } from "react";
 import { formatPublishedDate } from "../../utils/formatedate";
 import type { Article } from "../../services/HomeService/type";
 import NewsBoxRow from "../../components/NewsBox/NewsBoxRow";
 import NewsBox from "../../components/NewsBox/NewsBox";
-import { useSearchContext } from "../../context/SearchContext";
+// import { useSearchContext } from "../../context/SearchContext";
+import useDetailViewModel from "./viewModel";
 // import "react-loading-skeleton/dist/skeleton.css";
 // import Skeleton from "react-loading-skeleton";
 
 function DetailView() {
-  const { index, category } = useParams();
-  const { articles, everythingArticles } = useNewsContext();
-  const { searchArticles } = useSearchContext();
-
-  const article = useMemo(() => {
-    if (!articles || !index) return undefined;
-
-    if (category === "head") {
-      return articles[Number(index)];
-    } else if (category === "search") {
-      return searchArticles[Number(index)];
-    } else if (category === "mustread") {
-      const result = everythingArticles.sort(
-        (a: Article, b: Article) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
-      return result[Number(index)];
-    } else {
-      const result = everythingArticles
-        .filter(
-          (article: Article) => article.category?.toLowerCase() === category
-        )
-        .sort(
-          (a: Article, b: Article) =>
-            new Date(b.publishedAt).getTime() -
-            new Date(a.publishedAt).getTime()
-        );
-      return result[Number(index)];
-    }
-  }, [articles, everythingArticles, category, index]);
-
-  const articless = useMemo(() => {
-    if (!articles || !index) return undefined;
-
-    if (category === "head") {
-      return articles;
-    } else if (category === "search") {
-      return searchArticles;
-    } else if (category === "mustread") {
-      const result = everythingArticles.sort(
-        (a: Article, b: Article) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
-      return result;
-    } else {
-      const result = everythingArticles
-        .filter(
-          (article: Article) => article.category?.toLowerCase() === category
-        )
-        .sort(
-          (a: Article, b: Article) =>
-            new Date(b.publishedAt).getTime() -
-            new Date(a.publishedAt).getTime()
-        );
-      return result;
-    }
-  }, [articles, everythingArticles, category, index]);
+  const { category } = useParams();
+  // const { articles, everythingArticles } = useNewsContext();
+  // const { searchArticles } = useSearchContext();
+  const { article, articless } = useDetailViewModel();
 
   //abc
 

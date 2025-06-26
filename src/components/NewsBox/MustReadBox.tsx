@@ -3,7 +3,6 @@ import NewsBox from "./NewsBox";
 import type { Article } from "../../services/HomeService/type";
 
 function MustRead({ everything_articles }: { everything_articles: Article[] }) {
-  // Responsive: ปรับจำนวนข่าวต่อหน้า
   const getItemsPerPage = () => {
     if (window.innerWidth >= 1280) return 4; // xl
     if (window.innerWidth >= 1024) return 4; // lg

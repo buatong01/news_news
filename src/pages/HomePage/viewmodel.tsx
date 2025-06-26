@@ -32,7 +32,11 @@ function useHomeViewModel(category: string) {
 
   useEffect(() => {
     if (everythingData.length > 0) {
-      setEverythingArticles(everythingData);
+      const sortedEverythingData = [...everythingData].sort(
+        (a: Article, b: Article) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+      setEverythingArticles(sortedEverythingData);
     }
   }, [everythingData, setEverythingArticles]);
 
