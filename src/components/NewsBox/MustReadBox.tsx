@@ -73,8 +73,8 @@ function MustRead({ everything_articles }: { everything_articles: Article[] }) {
           <div key={article.title} className="w-full max-w-xs">
             <NewsBox
               data={article}
-              index={index}
-              category={article.category ?? "head"}
+              index={15 + index}
+              category={"mustread"}
               isShowImg={true}
               isCenter={false}
               isShowDescription={true}

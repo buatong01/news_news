@@ -20,7 +20,7 @@ function NewsBoxSearch({ data, index }: ImgNewsProps) {
         {/* รูปภาพ: เต็มความกว้างบนมือถือ, อยู่ซ้ายบน sm ขึ้นไป */}
         <div className="w-full sm:col-span-3 flex items-center justify-center mb-3 sm:mb-0">
           <img
-            className="object-cover w-full h-[180px] sm:h-[150px] sm:w-auto rounded"
+            className="object-cover w-full h-[180px] sm:h-[150px] sm:w-auto "
             src={
               data.urlToImage ??
               "https://i.pinimg.com/736x/c4/74/fc/c474fc3afd5bddbba025449218550f39.jpg"

@@ -67,6 +67,7 @@ function Drawer({ onclose, categorySelected, onCategoryChange }: DrawerType) {
                 onClick={() => {
                   nevigate("/");
                   onCategoryChange(value);
+                  setIsDrawerOpen(false);
                 }}
               >
                 {label}

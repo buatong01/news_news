@@ -23,6 +23,12 @@ function DetailView() {
       return articles[Number(index)];
     } else if (category === "search") {
       return searchArticles[Number(index)];
+    } else if (category === "mustread") {
+      const result = everythingArticles.sort(
+        (a: Article, b: Article) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+      return result[Number(index)];
     } else {
       const result = everythingArticles
         .filter(
@@ -44,6 +50,12 @@ function DetailView() {
       return articles;
     } else if (category === "search") {
       return searchArticles;
+    } else if (category === "mustread") {
+      const result = everythingArticles.sort(
+        (a: Article, b: Article) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+      return result;
     } else {
       const result = everythingArticles
         .filter(
