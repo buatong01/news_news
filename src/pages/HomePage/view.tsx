@@ -6,16 +6,7 @@ import useHomeViewModel from "./viewmodel";
 import { useNewsContext } from "../../context/newcontext";
 import MustRead from "../../components/NewsBox/MustReadBox";
 import PaginationView from "../../components/Pagination/view";
-
-// Simple Skeleton component
-function SkeletonBox({ height = 120 }: { height?: number }) {
-  return (
-    <div
-      className="animate-pulse bg-gray-200 rounded mb-4"
-      style={{ height }}
-    />
-  );
-}
+import { SkeletonBox } from "../../components/SkeletonBox/view";
 
 function HomeView() {
   const { category } = useNewsContext();
@@ -26,33 +17,80 @@ function HomeView() {
     everything_articles,
   } = useHomeViewModel(category);
 
+  console.log(category);
+
+  if (isAllLoading || isEverythingLoading) {
+    return (
+      <div className="w-full min-h-screen bg-white pt-[45px] sm:pt-[48px] md:pt-[80px] lg:pt-[122px] px-4 xl:px-25">
+        <div className="grid grid-cols-8 sm:grid-cols-12 lg:grid-cols-16 gap-5">
+          <div className="hidden sm:block sm:col-span-4 py-5">
+            <SkeletonBox height={180} />
+            <SkeletonBox height={180} />
+          </div>
+          <div className="col-span-8 py-5">
+            <SkeletonBox height={250} />
+          </div>
+          <div className="hidden lg:block col-span-4 py-5">
+            <SkeletonBox height={120} />
+            <SkeletonBox height={120} />
+            <SkeletonBox height={120} />
+            <SkeletonBox height={120} />
+          </div>
+        </div>
+
+        <SkeletonBox height={80} />
+        <SkeletonBox height={80} />
+
+        <div className="lg:hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-5 pb-5 sm:py-5">
+          <SkeletonBox height={120} />
+          <SkeletonBox height={120} />
+          <SkeletonBox height={120} />
+          <SkeletonBox height={120} />
+        </div>
+
+        <div className="border-b-2 border-gray-300 w-full pt-8"></div>
+        <div className="h-6 bg-gray-300 rounded w-48 mt-2 mb-6"></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-6">
+          <SkeletonBox height={180} />
+          <SkeletonBox height={180} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-9 mt-8">
+          {[...Array(4)].map((i) => (
+            <div key={i} className="border-t-2 border-gray-300">
+              <div className="h-6 bg-gray-300 rounded w-24 mt-2 mb-4"></div>
+              <SkeletonBox height={80} />
+              <SkeletonBox height={80} />
+              <SkeletonBox height={80} />
+              <SkeletonBox height={80} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full min-h-screen bg-white pt-[45px] sm:pt-[48px] md:pt-[80px] lg:pt-[122px] px-4  xl:px-25 ">
       {/* box 1 */}
       <div className="grid grid-cols-8 sm:grid-cols-12 lg:grid-cols-16 gap-5">
         <div className="hidden sm:block sm:col-span-4 py-5">
-          {isAllLoading
-            ? [1, 2].map((i) => <SkeletonBox key={i} height={180} />)
-            : all_articles
-                .slice(0, 2)
-                .map((articles: Article, index: number) => (
-                  <NewsBox
-                    key={articles.title}
-                    data={articles}
-                    index={0 + index}
-                    category="head"
-                    isShowImg={true}
-                    isCenter={false}
-                    isShowDescription={true}
-                    isLast={index !== 1}
-                  />
-                ))}
+          {all_articles.slice(0, 2).map((articles: Article, index: number) => (
+            <NewsBox
+              key={articles.title}
+              data={articles}
+              index={0 + index}
+              category="head"
+              isShowImg={true}
+              isCenter={false}
+              isShowDescription={true}
+              isLast={index !== 1}
+            />
+          ))}
         </div>
 
         <div className="col-span-8 py-5">
-          {isAllLoading ? (
-            <SkeletonBox height={250} />
-          ) : (
+          {
             <NewsBox
               data={all_articles[2]}
               index={2}
@@ -62,58 +100,42 @@ function HomeView() {
               isShowDescription={true}
               isLast={false}
             />
-          )}
+          }
         </div>
 
         <div className="hidden lg:block col-span-4 py-5">
-          {isAllLoading
-            ? [1, 2, 3, 4].map((i) => <SkeletonBox key={i} height={120} />)
-            : all_articles
-                .slice(3, 7)
-                .map((articles: Article, index: number) => (
-                  <NewsBox
-                    key={articles.title}
-                    data={articles}
-                    index={3 + index}
-                    category="head"
-                    isShowImg={false}
-                    isCenter={false}
-                    isShowDescription={true}
-                    isLast={index !== 3}
-                  />
-                ))}
+          {all_articles.slice(3, 7).map((articles: Article, index: number) => (
+            <NewsBox
+              key={articles.title}
+              data={articles}
+              index={3 + index}
+              category="head"
+              isShowImg={false}
+              isCenter={false}
+              isShowDescription={true}
+              isLast={index !== 3}
+            />
+          ))}
         </div>
       </div>
 
-      {isAllLoading
-        ? [1, 2].map((i) => <SkeletonBox key={i} height={80} />)
-        : all_articles
-            .slice(0, 2)
-            .map((articles: Article, index: number) => (
-              <NewsBoxRowTwo
-                key={articles.title}
-                data={articles}
-                index={0 + index}
-              />
-            ))}
+      {all_articles.slice(0, 2).map((articles: Article, index: number) => (
+        <NewsBoxRowTwo key={articles.title} data={articles} index={0 + index} />
+      ))}
 
       <div className="lg:hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-5 pb-5 sm:py-5">
-        {isAllLoading
-          ? [1, 2, 3, 4].map((i) => <SkeletonBox key={i} height={120} />)
-          : all_articles
-              .slice(3, 7)
-              .map((articles: Article, index: number) => (
-                <NewsBox
-                  key={articles.title}
-                  data={articles}
-                  index={3 + index}
-                  category="head"
-                  isShowImg={false}
-                  isCenter={false}
-                  isShowDescription={true}
-                  isLast={index !== 3}
-                />
-              ))}
+        {all_articles.slice(3, 7).map((articles: Article, index: number) => (
+          <NewsBox
+            key={articles.title}
+            data={articles}
+            index={3 + index}
+            category="head"
+            isShowImg={false}
+            isCenter={false}
+            isShowDescription={true}
+            isLast={index !== 3}
+          />
+        ))}
       </div>
       {/* box 1 */}
 
@@ -121,27 +143,23 @@ function HomeView() {
       <div className="border-b-2 border-black w-full pt-8"></div>
       <h2 className="text-black font-extrabold pt-1">WEEKEND READS</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-6">
-        {isAllLoading
-          ? [1, 2].map((i) => <SkeletonBox key={i} height={180} />)
-          : all_articles
-              .slice(7, 9)
-              .map((articles: Article, index: number) => (
-                <NewsBox
-                  key={articles.title}
-                  data={articles}
-                  index={7 + index}
-                  category="head"
-                  isShowImg={true}
-                  isCenter={false}
-                  isShowDescription={true}
-                  isLast={false}
-                />
-              ))}
+        {all_articles.slice(7, 9).map((articles: Article, index: number) => (
+          <NewsBox
+            key={articles.title}
+            data={articles}
+            index={7 + index}
+            category="head"
+            isShowImg={true}
+            isCenter={false}
+            isShowDescription={true}
+            isLast={false}
+          />
+        ))}
       </div>
       {/* box 2 */}
 
       {/* อันที่งง ห้ามแตะ  */}
-      {category === "" && (
+      {category === "general" && (
         <div>
           <div className="border-b-2 border-black w-full pt-8"></div>
           <h2 className="text-black font-extrabold pt-1 ">ALSO IN NEWS &gt;</h2>
@@ -283,15 +301,15 @@ function HomeView() {
       )}
       {/* อันที่งง ฟ้ามแตะ */}
 
-      {/* เลื่อนๆ */}
+      {/* โอ้ย */}
       {/* {category === "" && (
         <MustRead everything_articles={everything_articles} />
       )} */}
 
-      {/* เลื่อนๆ */}
+      {/* โอ้ย */}
 
       {/* แยก category ไรนักหนาวะ */}
-      {category === "" && (
+      {category === "general" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-9">
           {["trump", "business", "animal", "science"].map((cat) => (
             <div className="border-t-2 border-black" key={cat}>
@@ -325,15 +343,15 @@ function HomeView() {
       )}
       {/* แยก category ไรนักหนาวะ */}
 
-      <div className="text-black border-t-2 border-black" />
-      <h3 className="text-sm md:text-base font-extrabold pt-2 text-black">
-        MORE IN {category.toLocaleUpperCase()}
-      </h3>
       {/* ปุ่มเลื่อน */}
-      {isAllLoading ? (
-        <div></div>
-      ) : (
-        <PaginationView articles={all_articles} items={4} start={10} />
+      {category !== "general" && (
+        <>
+          <div className="text-black border-t-2 border-black" />
+          <h3 className="text-sm md:text-base font-extrabold pt-2 text-black">
+            MORE IN {category.toLocaleUpperCase()}
+          </h3>
+          <PaginationView articles={all_articles} items={4} start={10} />
+        </>
       )}
 
       {/* ปุ่มเลื่อน */}

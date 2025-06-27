@@ -13,6 +13,10 @@ function NavBarView() {
   const { category, setCategory } = useNewsContext();
   const nevigate = useNavigate();
 
+  if (category === "") {
+    setCategory("general");
+  }
+
   return (
     <div className="bg-white w-screen fixed top-0 left-0 z-50">
       <div className="border-b border-gray-200 relative md:h-[80px] lg:h-[80px] sm:h-[48px]">

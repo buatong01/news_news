@@ -14,6 +14,10 @@ function Drawer({ onclose }: DrawerType) {
   const { category, setCategory } = useNewsContext();
   const [search, setSearch] = useState<string>("");
 
+  if (category === "") {
+    setCategory("general");
+  }
+
   return (
     <>
       <div
@@ -51,7 +55,7 @@ function Drawer({ onclose }: DrawerType) {
 
           <div className="flex flex-col justify-start w-full h-[304px]">
             {[
-              { label: "Home", value: "" }, // general
+              { label: "Home", value: "general" }, // general
               { label: "Business", value: "business" },
               { label: "Entertainment", value: "entertainment" },
               { label: "Health", value: "health" },
