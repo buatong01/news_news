@@ -3,13 +3,34 @@ import type { Article } from "../../services/HomeService/type";
 import useHomeService from "../../services/HomeService";
 import { useNewsContext } from "../../context/newcontext";
 import { useEffect, useState } from "react";
+import { data } from "react-router-dom";
 
 function useHomeViewModel(category: string) {
-  const { fetchNews, fetchEverythingNews } = useHomeService();
+  const { fetchNews, fetchEverythingNews: fetchEverythingNewsService } =
+    useHomeService();
   const { setArticles, setEverythingArticles } = useNewsContext();
 
   const [moreInPage, setMoreInPage] = useState(1);
   const itemsPerPage = 4;
+
+  const categories = ["business", "animal", "science", "trump"];
+
+  const fetchAllCategories = async (): Promise<Article[]> => {
+    const results = await Promise.all(
+      categories.map(async (cat) => {
+        const articles = await fetchEverythingNewsService(cat);
+        return articles.map((article) => ({
+          ...article,
+          category: cat,
+        }));
+      })
+    );
+    const data = results.flat();
+    return [...data].sort(
+      (a: Article, b: Article) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+  };
 
   const { data: allData = [], isLoading: isAllLoading } = useQuery<Article[]>({
     queryKey: ["top-headlines", category],
@@ -19,8 +40,8 @@ function useHomeViewModel(category: string) {
 
   const { data: everythingData = [], isLoading: isEverythingLoading } =
     useQuery<Article[]>({
-      queryKey: ["everything-news"],
-      queryFn: () => fetchEverythingNews(),
+      queryKey: ["everything-news", categories],
+      queryFn: fetchAllCategories,
       refetchOnWindowFocus: false,
     });
 
@@ -32,11 +53,11 @@ function useHomeViewModel(category: string) {
 
   useEffect(() => {
     if (everythingData.length > 0) {
-      const sortedEverythingData = [...everythingData].sort(
-        (a: Article, b: Article) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
-      setEverythingArticles(sortedEverythingData);
+      // const sortedEverythingData = [...everythingData].sort(
+      //   (a: Article, b: Article) =>
+      //     new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      // );
+      setEverythingArticles(everythingData);
     }
   }, [everythingData, setEverythingArticles]);
 

@@ -10,22 +10,29 @@ function useSearchViewModel(searchTopic: string) {
 
   const { data, isLoading } = useQuery<Article[]>({
     queryKey: ["everything-news-search", searchTopic],
-    queryFn: () => fetchSearch(searchTopic),
+    queryFn: async () => {
+      const data = await fetchSearch(searchTopic);
+      let sorted: Article[] = [];
+      if (data && data.length > 0) {
+        sorted = [...data].sort(
+          (a, b) =>
+            new Date(b.publishedAt).getTime() -
+            new Date(a.publishedAt).getTime()
+        );
+      }
+      return sorted;
+    },
     refetchOnWindowFocus: false,
   });
 
-  const [moreInPage, setMoreInPage] = useState(1);
-  const itemsPerPage = 9;
-
   useEffect(() => {
     if (data && data.length > 0) {
-      const sorted = [...data].sort(
-        (a, b) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
-      setSearchArtivles(sorted);
+      setSearchArtivles(data);
     }
   }, [data, setSearchArtivles]);
+
+  const [moreInPage, setMoreInPage] = useState(1);
+  const itemsPerPage = 9;
 
   const startIndex = 0 + (moreInPage - 1) * itemsPerPage;
   const currentMoreInArticles = searchArticles.slice(
