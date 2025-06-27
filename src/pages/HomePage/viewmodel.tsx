@@ -2,16 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import type { Article } from "../../services/HomeService/type";
 import useHomeService from "../../services/HomeService";
 import { useNewsContext } from "../../context/newcontext";
-import { useEffect, useState } from "react";
-import { data } from "react-router-dom";
+import { useEffect } from "react";
 
 function useHomeViewModel(category: string) {
   const { fetchNews, fetchEverythingNews: fetchEverythingNewsService } =
     useHomeService();
   const { setArticles, setEverythingArticles } = useNewsContext();
-
-  const [moreInPage, setMoreInPage] = useState(1);
-  const itemsPerPage = 4;
 
   const categories = ["business", "animal", "science", "trump"];
 
@@ -61,22 +57,10 @@ function useHomeViewModel(category: string) {
     }
   }, [everythingData, setEverythingArticles]);
 
-  const startIndex = 10 + (moreInPage - 1) * itemsPerPage;
-  const currentMoreInArticles = allData.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-  const totalMoreInPages =
-    allData.length > 10 ? Math.ceil((allData.length - 10) / itemsPerPage) : 0;
-
   return {
     all_articles: allData,
     isAllLoading,
-    setMoreInPage,
-    currentMoreInArticles,
-    totalMoreInPages,
-    moreInPage,
-    startIndex,
+
     everything_articles: everythingData,
     isEverythingLoading,
   };

@@ -1,9 +1,9 @@
 import searchImg from "../../assets/search.png";
 import { useSearchContext } from "../../context/SearchContext";
 import useSearchViewModel from "../SearchPage/viewModel";
-import NewsBoxSearch from "../../components/NewsBox/NewsBoxSearch";
-import type { Article } from "../../services/HomeService/type";
+
 import { useState } from "react";
+import PaginationView from "../../components/Pagination/view";
 
 function SkeletonBox({ height = 120 }: { height?: number }) {
   return (
@@ -15,22 +15,10 @@ function SkeletonBox({ height = 120 }: { height?: number }) {
 }
 
 function SearchView() {
-  const { searchTopic, setSearchTopic } = useSearchContext();
-  const {
-    isLoading,
-    setMoreInPage,
-    currentMoreInArticles,
-    totalMoreInPages,
-    moreInPage,
-    startIndex,
-  } = useSearchViewModel(searchTopic);
+  const { searchTopic, setSearchTopic, searchArticles } = useSearchContext();
+  const { isLoading } = useSearchViewModel(searchTopic);
 
   const [search, setSearch] = useState<string>(searchTopic);
-
-  const handleSetPage = (page: number) => {
-    setMoreInPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <div className="w-full min-h-screen bg-white pt-[45px] sm:pt-[48px] md:pt-[80px] lg:pt-[122px]  px-7 xl:px-35">
@@ -65,50 +53,8 @@ function SearchView() {
         </>
       ) : (
         <>
-          {currentMoreInArticles.map((articles: Article, index: number) => (
-            <NewsBoxSearch
-              key={articles.title}
-              data={articles}
-              index={startIndex + index}
-            />
-          ))}
+          <PaginationView articles={searchArticles} items={9} start={0} />
         </>
-      )}
-
-      {totalMoreInPages > 0 && (
-        <div className="flex flex-wrap justify-center gap-x-2 gap-y-2 mt-4 mb-4">
-          <button
-            onClick={() => handleSetPage(Math.max(moreInPage - 1, 1))}
-            disabled={moreInPage === 1}
-            className="w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2 bg-gray-100 text-black font-bold rounded"
-          >
-            &lt;
-          </button>
-
-          {[...Array(totalMoreInPages)].map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleSetPage(idx + 1)}
-              className={`w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2  ${
-                moreInPage === idx + 1
-                  ? "bg-black text-white font-bold"
-                  : "bg-gray-100 text-black font-bold"
-              }`}
-            >
-              {idx + 1}
-            </button>
-          ))}
-
-          <button
-            onClick={() =>
-              handleSetPage(Math.min(moreInPage + 1, totalMoreInPages))
-            }
-            disabled={moreInPage === totalMoreInPages}
-            className="w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2 bg-gray-100 text-black font-bold "
-          >
-            &gt;
-          </button>
-        </div>
       )}
     </div>
   );

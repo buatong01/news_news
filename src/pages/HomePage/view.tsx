@@ -1,11 +1,11 @@
 import NewsBox from "../../components/NewsBox/NewsBox";
-import NewsBoxRow from "../../components/NewsBox/NewsBoxRow";
 import NewsBoxRowTwo from "../../components/NewsBox/NewsBoxRowTwo";
 import NewBoxImg from "../../components/NewsBox/NewBoxImg";
 import type { Article } from "../../services/HomeService/type";
 import useHomeViewModel from "./viewmodel";
 import { useNewsContext } from "../../context/newcontext";
 import MustRead from "../../components/NewsBox/MustReadBox";
+import PaginationView from "../../components/Pagination/view";
 
 // Simple Skeleton component
 function SkeletonBox({ height = 120 }: { height?: number }) {
@@ -22,11 +22,6 @@ function HomeView() {
   const {
     all_articles,
     isAllLoading,
-    setMoreInPage,
-    currentMoreInArticles,
-    totalMoreInPages,
-    moreInPage,
-    startIndex,
     isEverythingLoading,
     everything_articles,
   } = useHomeViewModel(category);
@@ -330,68 +325,15 @@ function HomeView() {
       )}
       {/* แยก category ไรนักหนาวะ */}
 
+      <div className="text-black border-t-2 border-black" />
+      <h3 className="text-sm md:text-base font-extrabold pt-2 text-black">
+        MORE IN {category.toLocaleUpperCase()}
+      </h3>
       {/* ปุ่มเลื่อน */}
       {isAllLoading ? (
         <div></div>
       ) : (
-        category !== "" && (
-          <div className="w-full pt-6 ">
-            <div className="text-black border-t-2 border-black" />
-            <h3 className="text-sm md:text-base font-extrabold pt-2 text-black">
-              MORE IN {category.toLocaleUpperCase()}
-            </h3>
-
-            <div>
-              {currentMoreInArticles.map((article: Article, index: number) => (
-                <NewsBoxRow
-                  key={article.title}
-                  data={article}
-                  index={startIndex + index}
-                  category="head"
-                />
-              ))}
-            </div>
-
-            {/* Pagination */}
-            {totalMoreInPages > 0 && (
-              <div className="flex flex-wrap justify-center gap-x-2 gap-y-2 mt-4 mb-4">
-                <button
-                  onClick={() => setMoreInPage((prev) => Math.max(prev - 1, 1))}
-                  disabled={moreInPage === 1}
-                  className="w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2 bg-gray-100 text-black font-bold rounded"
-                >
-                  &lt;
-                </button>
-
-                {[...Array(totalMoreInPages)].map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setMoreInPage(idx + 1)}
-                    className={`w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2  ${
-                      moreInPage === idx + 1
-                        ? "bg-black text-white font-bold"
-                        : "bg-gray-100 text-black font-bold"
-                    }`}
-                  >
-                    {idx + 1}
-                  </button>
-                ))}
-
-                <button
-                  onClick={() =>
-                    setMoreInPage((prev) =>
-                      Math.min(prev + 1, totalMoreInPages)
-                    )
-                  }
-                  disabled={moreInPage === totalMoreInPages}
-                  className="w-8 h-8 sm:w-auto sm:h-auto text-sm sm:text-base px-2 sm:px-4 py-2 bg-gray-100 text-black font-bold "
-                >
-                  &gt;
-                </button>
-              </div>
-            )}
-          </div>
-        )
+        <PaginationView articles={all_articles} items={4} start={10} />
       )}
 
       {/* ปุ่มเลื่อน */}
