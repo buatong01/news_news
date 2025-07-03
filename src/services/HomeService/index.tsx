@@ -3,24 +3,31 @@ import type { Article } from "./type";
 function useHomeService() {
   const API_KEY = import.meta.env.VITE_API_KEY;
 
-  const fetchNews = async (categoryOrQuery?: string): Promise<Article[]> => {
+  const fetchNews = async (
+    categoryOrQuery?: string
+  ): Promise<{ articles: Article[]; totalResults: Number }> => {
     let url = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=us`;
 
     if (categoryOrQuery && categoryOrQuery !== "") {
       url += `&category=${categoryOrQuery}`;
     }
-    const data = await fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch news");
-        return res.json();
-      })
-      .then((data) => data.articles || [])
-      .catch((error) => {
-        console.log(error);
-        return [];
-      });
 
-    return data;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch news");
+      const data = await res.json();
+
+      return {
+        articles: data.articles || [],
+        totalResults: data.totalResults || 0,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        articles: [],
+        totalResults: 0,
+      };
+    }
   };
 
   const fetchEverythingNews = async (

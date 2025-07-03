@@ -7,6 +7,8 @@ import { useNewsContext } from "../../context/newcontext";
 import MustRead from "../../components/NewsBox/MustReadBox";
 import PaginationView from "../../components/Pagination/view";
 import { SkeletonBox } from "../../components/SkeletonBox/view";
+// import { useDispatch, useSelector } from "react-redux";
+// import type { IStoreType } from "../../store/type";
 
 function HomeView() {
   const { category } = useNewsContext();
@@ -15,9 +17,22 @@ function HomeView() {
     isAllLoading,
     isEverythingLoading,
     everything_articles,
-  } = useHomeViewModel(category);
+  } = useHomeViewModel();
 
-  console.log(category);
+  // const res = useSelector((state: IStoreType) => state.user);
+
+  // console.log("user", res);
+
+  // const dispatch = useDispatch();
+
+  // dispatch({
+  //   type: "SET_USER",
+  //   payload: {
+  //     name: "BT",
+  //     email: "A-A",
+  //     id: "1234567890",
+  //   },
+  // });
 
   if (isAllLoading || isEverythingLoading) {
     return (
@@ -302,15 +317,15 @@ function HomeView() {
       {/* อันที่งง ฟ้ามแตะ */}
 
       {/* โอ้ย */}
-      {/* {category === "" && (
+      {category === "general" && (
         <MustRead everything_articles={everything_articles} />
-      )} */}
+      )}
 
       {/* โอ้ย */}
 
       {/* แยก category ไรนักหนาวะ */}
       {category === "general" && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-9">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 pb-9 pt-3.5">
           {["trump", "business", "animal", "science"].map((cat) => (
             <div className="border-t-2 border-black" key={cat}>
               <h3 className="text-black font-extrabold pt-1 pb-4">

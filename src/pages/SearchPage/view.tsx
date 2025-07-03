@@ -1,8 +1,8 @@
-import searchImg from "../../assets/search.png";
+// import searchImg from "../../assets/search.png";
 import { useSearchContext } from "../../context/SearchContext";
-import useSearchViewModel from "../SearchPage/viewModel";
-
-import { useState } from "react";
+import useSearchViewModel from "../../components/SearchInput/viewModel";
+import SearchInput from "../../components/SearchInput/view";
+// import { useState } from "react";
 import PaginationView from "../../components/Pagination/view";
 
 function SkeletonBox({ height = 120 }: { height?: number }) {
@@ -15,42 +15,21 @@ function SkeletonBox({ height = 120 }: { height?: number }) {
 }
 
 function SearchView() {
-  const { searchTopic, setSearchTopic, searchArticles } = useSearchContext();
-  const { isLoading } = useSearchViewModel(searchTopic);
-
-  const [search, setSearch] = useState<string>(searchTopic);
+  const { searchArticles } = useSearchContext();
+  const { isLoading, isFetching } = useSearchViewModel();
 
   return (
     <div className="w-full min-h-screen bg-white pt-[45px] sm:pt-[48px] md:pt-[80px] lg:pt-[122px]  px-7 xl:px-35">
-      <form
-        className="flex flex-row w-full h-[54px] mt-6 mb-15"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSearchTopic(search);
-        }}
-      >
-        <input
-          type="text"
-          className="border border-black w-full h-full text-black bg-white placeholder-gray-700 px-2"
-          placeholder="Search news,topics and more"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button type="submit" className="bg-black px-3.5">
-          <img
-            src={searchImg}
-            alt="search"
-            className=" object-cover h-7 w-7 filter invert "
-          />
-        </button>
-      </form>
+      <div className="pt-10 h-[102px]">
+        <SearchInput onclose={() => {}} />
+      </div>
 
-      {isLoading ? (
-        <>
+      {isLoading || isFetching ? (
+        <div className="pt-10">
           {[...Array(5)].map((_, idx) => (
             <SkeletonBox key={idx} />
           ))}
-        </>
+        </div>
       ) : (
         <>
           <PaginationView articles={searchArticles} items={9} start={0} />

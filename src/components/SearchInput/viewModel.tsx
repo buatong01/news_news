@@ -4,12 +4,12 @@ import useNavBarService from "../../services/SearchService";
 import { useSearchContext } from "../../context/SearchContext";
 import { useEffect } from "react";
 
-function useSearchViewModel(searchTopic: string) {
+function useSearchViewModel() {
   const { fetchSearch } = useNavBarService();
-  const { searchArticles, setSearchArtivles } = useSearchContext();
+  const { searchTopic, searchArticles, setSearchArtivles } = useSearchContext();
 
-  const { data, isLoading } = useQuery<Article[]>({
-    queryKey: ["everything-news-search", searchTopic],
+  const { data, isLoading, refetch, isFetching } = useQuery<Article[]>({
+    queryKey: ["everything-news-search"],
     queryFn: async () => {
       const data = await fetchSearch(searchTopic);
       let sorted: Article[] = [];
@@ -34,6 +34,8 @@ function useSearchViewModel(searchTopic: string) {
   return {
     searchNews: searchArticles,
     isLoading,
+    refetch,
+    isFetching,
   };
 }
 

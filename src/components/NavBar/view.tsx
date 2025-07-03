@@ -2,7 +2,7 @@ import search from "../../assets/search.png";
 import menu from "../../assets/menu.png";
 import avatar from "../../assets/avatar.png";
 import x from "../../assets/x.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Darwer from "../Drawer/view";
 import { useNewsContext } from "../../context/newcontext";
@@ -13,9 +13,11 @@ function NavBarView() {
   const { category, setCategory } = useNewsContext();
   const nevigate = useNavigate();
 
-  if (category === "") {
-    setCategory("general");
-  }
+  useEffect(() => {
+    if (category === "") {
+      setCategory("general");
+    }
+  }, [category, setCategory]);
 
   return (
     <div className="bg-white w-screen fixed top-0 left-0 z-50">
@@ -31,7 +33,10 @@ function NavBarView() {
             </button>
           ) : (
             <button
-              onClick={() => setIsDrawerOpen(true)}
+              onClick={() => {
+                setIsDrawerOpen(true);
+                setIsMenuOpen(false);
+              }}
               className="relative flex flex-row items-cente"
             >
               <img
@@ -66,6 +71,7 @@ function NavBarView() {
                   alt="avatar"
                   onClick={() => {
                     setIsMenuOpen(true);
+                    setIsDrawerOpen(false);
                   }}
                   className="h-5 w-5 "
                 />

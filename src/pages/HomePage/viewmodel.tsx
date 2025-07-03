@@ -4,10 +4,10 @@ import useHomeService from "../../services/HomeService";
 import { useNewsContext } from "../../context/newcontext";
 import { useEffect } from "react";
 
-function useHomeViewModel(category: string) {
+function useHomeViewModel() {
   const { fetchNews, fetchEverythingNews: fetchEverythingNewsService } =
     useHomeService();
-  const { setArticles, setEverythingArticles } = useNewsContext();
+  const { setArticles, setEverythingArticles, category } = useNewsContext();
 
   const categories = ["business", "animal", "science", "trump"];
 
@@ -30,7 +30,10 @@ function useHomeViewModel(category: string) {
 
   const { data: allData = [], isLoading: isAllLoading } = useQuery<Article[]>({
     queryKey: ["top-headlines", category],
-    queryFn: () => fetchNews(category),
+    queryFn: async () => {
+      const result = await fetchNews(category);
+      return result.articles;
+    },
     refetchOnWindowFocus: false,
   });
 
