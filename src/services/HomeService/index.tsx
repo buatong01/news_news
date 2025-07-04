@@ -4,12 +4,22 @@ function useHomeService() {
   const API_KEY = import.meta.env.VITE_API_KEY;
 
   const fetchNews = async (
-    categoryOrQuery?: string
+    categoryOrQuery?: string,
+    page?: number,
+    pageSize?: number
   ): Promise<{ articles: Article[]; totalResults: Number }> => {
     let url = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=us`;
 
     if (categoryOrQuery && categoryOrQuery !== "") {
       url += `&category=${categoryOrQuery}`;
+    }
+
+    if (page) {
+      url += `&page=${page}`;
+    }
+
+    if (pageSize) {
+      url += `&pageSize=${pageSize}`;
     }
 
     try {
@@ -48,9 +58,48 @@ function useHomeService() {
     return data;
   };
 
+  const fetchPaginatedNews = async (
+    categoryOrQuery?: string,
+    page: number = 1,
+    pageSize: number = 20
+  ): Promise<{
+    articles: Article[];
+    totalResults: Number;
+    currentPage: number;
+    totalPages: number;
+  }> => {
+    let url = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=us&page=${page}&pageSize=${pageSize}`;
+
+    if (categoryOrQuery && categoryOrQuery !== "") {
+      url += `&category=${categoryOrQuery}`;
+    }
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch news");
+      const data = await res.json();
+
+      return {
+        articles: data.articles || [],
+        totalResults: data.totalResults || 0,
+        currentPage: page,
+        totalPages: Math.ceil((data.totalResults || 0) / pageSize),
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        articles: [],
+        totalResults: 0,
+        currentPage: 1,
+        totalPages: 0,
+      };
+    }
+  };
+
   return {
     fetchNews,
     fetchEverythingNews,
+    fetchPaginatedNews,
   };
 }
 

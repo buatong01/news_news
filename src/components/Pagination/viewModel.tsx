@@ -9,30 +9,39 @@ function usePaginationViewModel(
   items: number,
   start: number
 ) {
-  const { fetchNews } = useHomeService();
+  const { fetchPaginatedNews } = useHomeService();
   const { category } = useNewsContext();
 
   const [moreInPage, setMoreInPage] = useState(1);
   const itemsPerPage = items;
 
-  const { data: allArticles, isLoading: isAllLoading } = useQuery<Article[]>({
-    queryKey: ["top-headlines", category],
+  const { data: paginationData, isLoading: isPaginationLoading } = useQuery({
+    queryKey: ["paginated-news", category, moreInPage, itemsPerPage],
     queryFn: async () => {
-      const result = await fetchNews(category);
-      return result.articles;
+      const result = await fetchPaginatedNews(
+        category,
+        moreInPage,
+        itemsPerPage
+      );
+      return result;
     },
     refetchOnWindowFocus: false,
   });
 
+  const currentMoreInArticles =
+    paginationData?.articles ||
+    articles.slice(
+      start + (moreInPage - 1) * itemsPerPage,
+      start + moreInPage * itemsPerPage
+    );
+
+  const totalMoreInPages = paginationData?.totalPages
+    ? Number(paginationData.totalPages)
+    : articles.length > start
+    ? Math.ceil((articles.length - start) / itemsPerPage)
+    : 0;
+
   const startIndex = start + (moreInPage - 1) * itemsPerPage;
-  const currentMoreInArticles = articles.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-  const totalMoreInPages =
-    articles.length > start
-      ? Math.ceil((articles.length - start) / itemsPerPage)
-      : 0;
 
   return {
     setMoreInPage,
@@ -40,8 +49,9 @@ function usePaginationViewModel(
     totalMoreInPages,
     moreInPage,
     startIndex,
-    allArticles,
-    isAllLoading,
+    isAllLoading: isPaginationLoading,
+    totalResults: paginationData?.totalResults || 0,
+    currentPage: paginationData?.currentPage || moreInPage,
   };
 }
 

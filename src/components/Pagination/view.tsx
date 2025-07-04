@@ -20,6 +20,8 @@ function PaginationView({ articles, items, start }: PaginationType) {
     totalMoreInPages,
     moreInPage,
     startIndex,
+    totalResults,
+    isAllLoading,
   } = usePaginationViewModel(articles, items, start);
 
   const handleSetPage = (page: number) => {
@@ -29,23 +31,38 @@ function PaginationView({ articles, items, start }: PaginationType) {
 
   return (
     <div className="w-full pt-6 ">
+      {isAllLoading && (
+        <div className="flex justify-center items-center py-8">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      )}
+
+      {!isAllLoading && Number(totalResults) > 0 && (
+        <div className="text-sm text-gray-600 mb-4">
+          Showing {(moreInPage - 1) * items + 1} -{" "}
+          {Math.min(moreInPage * items, Number(totalResults))} of{" "}
+          {Number(totalResults)} results
+        </div>
+      )}
+
       <div>
-        {currentMoreInArticles.map((article: Article, index: number) =>
-          isSearchPage ? (
-            <NewsBoxSearch
-              key={article.title}
-              data={article}
-              index={startIndex + index}
-            />
-          ) : (
-            <NewsBoxRow
-              key={article.title}
-              data={article}
-              index={startIndex + index}
-              category="head"
-            />
-          )
-        )}
+        {!isAllLoading &&
+          currentMoreInArticles.map((article: Article, index: number) =>
+            isSearchPage ? (
+              <NewsBoxSearch
+                key={article.title}
+                data={article}
+                index={startIndex + index}
+              />
+            ) : (
+              <NewsBoxRow
+                key={article.title}
+                data={article}
+                index={startIndex + index}
+                category="head"
+              />
+            )
+          )}
       </div>
 
       {/* Pagination */}

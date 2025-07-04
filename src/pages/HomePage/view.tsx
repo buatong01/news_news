@@ -361,7 +361,7 @@ function HomeView() {
       {/* ปุ่มเลื่อน */}
       {category !== "general" && (
         <>
-          <div className="text-black border-t-2 border-black" />
+          <div className="text-black border-t-2 border-black mt-3.5" />
           <h3 className="text-sm md:text-base font-extrabold pt-2 text-black">
             MORE IN {category.toLocaleUpperCase()}
           </h3>
