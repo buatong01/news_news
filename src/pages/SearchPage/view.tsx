@@ -32,7 +32,7 @@ function SearchView() {
         </div>
       ) : (
         <>
-          <PaginationView articles={searchArticles} items={9} start={0} />
+          {/* <PaginationView articles={searchArticles} items={9} start={0} /> */}
         </>
       )}
     </div>

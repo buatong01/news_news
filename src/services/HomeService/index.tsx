@@ -4,22 +4,12 @@ function useHomeService() {
   const API_KEY = import.meta.env.VITE_API_KEY;
 
   const fetchNews = async (
-    categoryOrQuery?: string,
-    page?: number,
-    pageSize?: number
+    categoryOrQuery?: string
   ): Promise<{ articles: Article[]; totalResults: Number }> => {
-    let url = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=us`;
+    let url = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=us&pageSize=100&page=1`;
 
     if (categoryOrQuery && categoryOrQuery !== "") {
       url += `&category=${categoryOrQuery}`;
-    }
-
-    if (page) {
-      url += `&page=${page}`;
-    }
-
-    if (pageSize) {
-      url += `&pageSize=${pageSize}`;
     }
 
     try {

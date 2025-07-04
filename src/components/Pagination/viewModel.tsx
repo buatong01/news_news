@@ -1,26 +1,24 @@
-import type { Article } from "../../services/HomeService/type";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useHomeService from "../../services/HomeService";
 import { useNewsContext } from "../../context/newcontext";
 
-function usePaginationViewModel(
-  articles: Article[],
-  items: number,
-  start: number
-) {
+function usePaginationViewModel(items: number) {
   const { fetchPaginatedNews } = useHomeService();
   const { category } = useNewsContext();
 
   const [moreInPage, setMoreInPage] = useState(1);
   const itemsPerPage = items;
 
+  // เริ่มจาก API page 2 เมื่อ UI page = 1
+  const actualApiPage = moreInPage + 1;
+
   const { data: paginationData, isLoading: isPaginationLoading } = useQuery({
-    queryKey: ["paginated-news", category, moreInPage, itemsPerPage],
+    queryKey: ["paginated-news", category, actualApiPage, itemsPerPage],
     queryFn: async () => {
       const result = await fetchPaginatedNews(
         category,
-        moreInPage,
+        actualApiPage,
         itemsPerPage
       );
       return result;
@@ -28,20 +26,13 @@ function usePaginationViewModel(
     refetchOnWindowFocus: false,
   });
 
-  const currentMoreInArticles =
-    paginationData?.articles ||
-    articles.slice(
-      start + (moreInPage - 1) * itemsPerPage,
-      start + moreInPage * itemsPerPage
-    );
+  const currentMoreInArticles = paginationData?.articles || [];
 
   const totalMoreInPages = paginationData?.totalPages
-    ? Number(paginationData.totalPages)
-    : articles.length > start
-    ? Math.ceil((articles.length - start) / itemsPerPage)
+    ? Math.max(Number(paginationData.totalPages) - 1, 0)
     : 0;
 
-  const startIndex = start + (moreInPage - 1) * itemsPerPage;
+  const startIndex = (actualApiPage - 1) * itemsPerPage;
 
   return {
     setMoreInPage,

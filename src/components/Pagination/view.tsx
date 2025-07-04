@@ -5,12 +5,10 @@ import NewsBoxRow from "../../components/NewsBox/NewsBoxRow";
 import NewsBoxSearch from "../../components/NewsBox/NewsBoxSearch";
 
 type PaginationType = {
-  start: number;
   items: number;
-  articles: Article[];
 };
 
-function PaginationView({ articles, items, start }: PaginationType) {
+function PaginationView({ items }: PaginationType) {
   const location = useLocation();
   const isSearchPage = location.pathname === "/search";
 
@@ -22,7 +20,7 @@ function PaginationView({ articles, items, start }: PaginationType) {
     startIndex,
     totalResults,
     isAllLoading,
-  } = usePaginationViewModel(articles, items, start);
+  } = usePaginationViewModel(items);
 
   const handleSetPage = (page: number) => {
     setMoreInPage(page);

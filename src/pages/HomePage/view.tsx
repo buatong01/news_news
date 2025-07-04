@@ -365,7 +365,7 @@ function HomeView() {
           <h3 className="text-sm md:text-base font-extrabold pt-2 text-black">
             MORE IN {category.toLocaleUpperCase()}
           </h3>
-          <PaginationView articles={all_articles} items={4} start={10} />
+          <PaginationView items={4} />
         </>
       )}
 
