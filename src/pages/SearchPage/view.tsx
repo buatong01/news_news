@@ -2,8 +2,9 @@
 import { useSearchContext } from "../../context/SearchContext";
 import useSearchViewModel from "../../components/SearchInput/viewModel";
 import SearchInput from "../../components/SearchInput/view";
+import SearchPaginationView from "../../components/SearchPagination/view";
 // import { useState } from "react";
-import PaginationView from "../../components/Pagination/view";
+// import PaginationView from "../../components/Pagination/view";
 
 function SkeletonBox({ height = 120 }: { height?: number }) {
   return (
@@ -15,7 +16,7 @@ function SkeletonBox({ height = 120 }: { height?: number }) {
 }
 
 function SearchView() {
-  const { searchArticles } = useSearchContext();
+  const { searchTopic } = useSearchContext();
   const { isLoading, isFetching } = useSearchViewModel();
 
   return (
@@ -31,9 +32,7 @@ function SearchView() {
           ))}
         </div>
       ) : (
-        <>
-          {/* <PaginationView articles={searchArticles} items={9} start={0} /> */}
-        </>
+        <>{searchTopic.trim() && <SearchPaginationView items={9} />}</>
       )}
     </div>
   );

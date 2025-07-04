@@ -56,8 +56,8 @@ function PaginationView({ items }: PaginationType) {
               <NewsBoxRow
                 key={article.title}
                 data={article}
-                index={startIndex + index}
-                category="head"
+                index={index} // ใช้ index ใน pagination data โดยตรง
+                category="pagination" // เปลี่ยนเป็น category pagination
               />
             )
           )}

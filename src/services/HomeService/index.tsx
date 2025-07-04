@@ -69,6 +69,14 @@ function useHomeService() {
       if (!res.ok) throw new Error("Failed to fetch news");
       const data = await res.json();
 
+      console.log("Fetched paginated news:", {
+        articles: data.articles,
+        totalResults: data.totalResults,
+        currentPage: page,
+        pageSize: pageSize,
+        totalPages: Math.ceil((data.totalResults || 0) / pageSize),
+      });
+
       return {
         articles: data.articles || [],
         totalResults: data.totalResults || 0,

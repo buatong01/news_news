@@ -2,20 +2,27 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useNewsContext } from "../../context/newcontext";
 import { useSearchContext } from "../../context/SearchContext";
+import { usePaginationContext } from "../../context/PaginationContext";
 import type { Article } from "../../services/HomeService/type";
 
 function useDetailViewModel() {
   const { index, category } = useParams();
 
   const { articles, everythingArticles } = useNewsContext();
-  const { searchArticles } = useSearchContext();
+  const { searchArticles, searchPaginationArticles } = useSearchContext();
+  const { paginationArticles } = usePaginationContext();
 
   // ไม่มี key id ให้ search ต้อง search index
   const getArticlesByCategory = () => {
     if (category === "head") {
       return articles;
     } else if (category === "search") {
-      return searchArticles;
+      // ใช้ search pagination articles หากมี ถ้าไม่มีใช้ searchArticles
+      return searchPaginationArticles.length > 0
+        ? searchPaginationArticles
+        : searchArticles;
+    } else if (category === "pagination") {
+      return paginationArticles;
     } else if (category === "mustread") {
       return [...everythingArticles].sort(
         (a: Article, b: Article) =>
@@ -38,6 +45,8 @@ function useDetailViewModel() {
     articles,
     everythingArticles,
     searchArticles,
+    searchPaginationArticles,
+    paginationArticles,
     category,
   ]);
 

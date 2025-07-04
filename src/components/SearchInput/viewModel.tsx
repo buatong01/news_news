@@ -8,13 +8,15 @@ function useSearchViewModel() {
   const { fetchSearch } = useNavBarService();
   const { searchTopic, searchArticles, setSearchArtivles } = useSearchContext();
 
-  const { data, isLoading, refetch, isFetching } = useQuery<Article[]>({
-    queryKey: ["everything-news-search"],
+  const { data, isLoading, refetch, isFetching } = useQuery({
+    queryKey: ["everything-news-search", searchTopic],
     queryFn: async () => {
-      const data = await fetchSearch(searchTopic);
+      if (!searchTopic.trim()) return [];
+
+      const result = await fetchSearch(searchTopic);
       let sorted: Article[] = [];
-      if (data && data.length > 0) {
-        sorted = [...data].sort(
+      if (result && result.articles && result.articles.length > 0) {
+        sorted = [...result.articles].sort(
           (a, b) =>
             new Date(b.publishedAt).getTime() -
             new Date(a.publishedAt).getTime()
@@ -22,6 +24,7 @@ function useSearchViewModel() {
       }
       return sorted;
     },
+    enabled: !!searchTopic.trim(), // Only run when searchTopic exists
     refetchOnWindowFocus: false,
   });
 

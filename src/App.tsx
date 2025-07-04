@@ -4,6 +4,7 @@ import FooterView from "./components/Footer/view";
 import "./App.css";
 import { NewsProvider } from "./context/newcontext";
 import { SearchProvider } from "./context/SearchContext";
+import { PaginationProvider } from "./context/PaginationContext";
 import useScrollToTop from "./hook/useScrollToTop";
 
 function App() {
@@ -13,9 +14,11 @@ function App() {
     <>
       <NewsProvider>
         <SearchProvider>
-          <NavBarView />
-          <Routers />
-          <FooterView />
+          <PaginationProvider>
+            <NavBarView />
+            <Routers />
+            <FooterView />
+          </PaginationProvider>
         </SearchProvider>
       </NewsProvider>
     </>
